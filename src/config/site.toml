@@ -1,0 +1,189 @@
+[config.site]
+title = "GS Developer"
+description = "Portfolio of Cesar Santiago Gonzalez Cuellar, an ICT student focused on data science, artificial intelligence, and telecommunications."
+pageTitle = "GS Developer | Cesar Santiago Gonzalez Cuellar"
+pageDescription = "Portfolio for Cesar Santiago Gonzalez Cuellar: data science, machine learning, RF signal analysis, software projects, and telecommunications-focused systems."
+repository = "https://github.com/Santiago244"
+footerNote = "Built with Astro and deployed with Cloudflare Pages."
+
+[config.vibe]
+showTrail = false
+
+[config.theme]
+palette = "blue-soft"
+
+[config.code]
+lightTheme = "catppuccin-latte"
+darkTheme = "catppuccin-macchiato"
+lineNumbers = true
+wrap = true
+preserveIndent = true
+collapseStyle = "collapsible-auto"
+
+[config.math]
+render = "katex"
+
+[config.comments]
+enabled = false
+provider = "none"
+show_on_posts = true
+
+[config.search]
+enabled = true
+shortcut = "mod+k"
+placeholder = "Search projects, notes, and skills..."
+maxResults = 6
+
+[config.blog]
+postsPerPage = 6
+
+[config.comments.giscus]
+repo = ""
+repo_id = ""
+category = ""
+category_id = ""
+mapping = "pathname"
+strict = "0"
+reactions_enabled = "1"
+emit_metadata = "0"
+input_position = "top"
+light_theme = "light"
+dark_theme = "dark"
+lang = "en"
+loading = "lazy"
+
+[config.comments.utterances]
+repo = ""
+issue_term = "pathname"
+label = "comment"
+theme = "github-light"
+
+[config.comments.waline]
+server_url = ""
+lang = "en"
+dark = "html.dark"
+pageview = true
+comment = true
+
+[config.profile]
+name = "Cesar Santiago Gonzalez Cuellar"
+handle = "@Santiago244"
+role = "Data Scientist | ICT Student • Telecommunications"
+company = "GS Developer"
+location = "Zilina, Slovakia"
+email = "santiagogonzalezcuellar@gmail.com"
+website = "https://gsdeveloper.dev/"
+github = "https://github.com/Santiago244"
+meta = "HTML, CSS, SCSS, JavaScript, Java, Python, C, APIs, Docker, SQLite, SQLAlchemy, networking"
+avatar = "/images/logo.png"
+
+[[config.topNav.links]]
+label = "Home"
+href = "/"
+
+[[config.topNav.links]]
+label = "Projects"
+href = "/projects"
+
+[[config.topNav.links]]
+label = "Blog"
+href = "/blog"
+
+[[config.topNav.links]]
+label = "About"
+href = "/about"
+
+[[config.topNav.links]]
+label = "Contact"
+href = "mailto:santiagogonzalezcuellar@gmail.com"
+
+[config.home]
+layout = "grid"
+
+[config.home.quote]
+text = [
+  "Exploring the intersection of artificial intelligence, data science, and telecommunications.",
+]
+image = "/images/logo-with-name.png"
+
+[config.home.intro]
+title = "ICT Student • Telecommunications"
+name = "Data Scientist"
+body = [
+  "I am Cesar Santiago Gonzalez Cuellar, an ICT student at the University of Žilina passionate about applying machine learning to wireless communication systems.",
+  "My recent work includes developing deep learning models for Automatic Modulation Classification and analyzing RF signal datasets, while continuing to build practical software using Python, Java, databases, and modern web technologies.",
+  "I enjoy turning complex engineering problems into intelligent, data-driven solutions.",
+]
+image = "/images/logo-cat.png"
+
+[config.home.latest]
+count = 1
+heatmapWeeks = 24
+showHeatmapLatest = true
+excludeDraft = true
+startDate = ""
+dateArchiveBaseHref = ""
+
+[[config.home.navigation]]
+icon = "briefcase"
+title = "Projects"
+subtitle = "Web apps, Java OOP, backend practice, and ML experiments"
+href = "/projects"
+
+[[config.home.navigation]]
+icon = "compass"
+title = "Experience"
+subtitle = "ELIS Tech, Teleperformance, client and personal projects"
+href = "/about"
+
+[[config.home.navigation]]
+icon = "pen"
+title = "Notes"
+subtitle = "Development logs, learning notes, and project decisions"
+href = "/blog"
+
+[[config.home.navigation]]
+icon = "github"
+title = "GitHub"
+subtitle = "Code, experiments, and portfolio source"
+href = "https://github.com/Santiago244"
+
+[[config.home.connect]]
+label = "GitHub"
+href = "https://github.com/Santiago244"
+icon = "github"
+
+[[config.home.connect]]
+label = "Website"
+href = "https://gsdeveloper.dev/"
+icon = "compass"
+
+[[config.home.connect]]
+label = "Projects"
+href = "/projects"
+icon = "repo"
+
+[[config.home.connect]]
+label = "Email"
+href = "mailto:santiagogonzalezcuellar@gmail.com"
+icon = "mail"
+
+[[config.home.doing]]
+text = "Studying ICT at the University of Žilina"
+mark = "01"
+
+[[config.home.doing]]
+text = "Building frontend projects with HTML, CSS, SCSS, JavaScript, and DOM interactions"
+mark = "02"
+
+[[config.home.doing]]
+text = "Practicing backend and database work with CS50, SQLite, SQLAlchemy, and CRUD applications"
+mark = "03"
+
+[[config.home.doing]]
+text = "Developing Java OOP projects including a to-do list system and Swing GUI practice"
+mark = "04"
+
+[[config.home.doing]]
+text = "Exploring machine learning through an Automatic Modulation Classification model"
+mark = "05"
