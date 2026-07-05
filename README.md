@@ -1,75 +1,59 @@
 # GS Developer Portfolio
 
-Astro portfolio for `gsdeveloper.dev`.
+Personal portfolio for **Cesar Santiago Gonzalez Cuellar**, an ICT student at the University of Žilina focused on data science, artificial intelligence, and telecommunications.
 
-This project combines:
+Live site: [gsdeveloper.dev](https://gsdeveloper.dev)  
+GitHub: [Santiago244](https://github.com/Santiago244)
 
-- Navfolio structure: portfolio, blog, projects, about, search, content collections
-- Apex-inspired visual direction: stronger display typography, darker surfaces, service-site feel
-- Custom GS Developer palette: light blue accents instead of yellow
+## About The Project
 
-## Local Development
+This portfolio presents my work at the intersection of artificial intelligence, data science, and telecommunications. It highlights projects related to machine learning, RF signal analysis, software development, databases, Java, Python, and modern web technologies.
 
-```bash
-npm install
-npm run dev
-```
+The site is built as a code-first portfolio instead of a page-builder website. That makes it easier to customize the design, keep the source version-controlled, and deploy updates automatically through Cloudflare Pages.
 
-Astro will print a local URL, usually:
+## What It Showcases
 
-```txt
-http://localhost:4321
-```
+- Data science and machine learning projects
+- Automatic Modulation Classification and RF signal datasets
+- Python, Java, databases, and practical software development
+- Web projects built with modern frontend tools
+- Notes, project writeups, and learning progress
+- Professional background in IT support, customer support, and technical communication
 
-## Production Build
+## Tech Stack
 
-```bash
-npm run build
-npm run preview
-```
+- Astro
+- TypeScript
+- HTML
+- CSS / SCSS-inspired styling
+- JavaScript
+- MDX content
+- Pagefind search
+- Cloudflare Pages
 
-Build output goes to:
-
-```txt
-dist/
-```
-
-## Cloudflare Pages
-
-Use these settings:
+## Project Structure
 
 ```txt
-Framework preset: Astro
+src/config/site.toml              Main site content and profile data
+src/content/about.mdx             About page content
+src/content/projects/index.mdx    Projects page content
+src/content/blog/                 Blog posts and development notes
+src/styles/global.css             Global theme and visual style
+src/components/                   Reusable Astro components
+public/images/                    Static images and profile assets
+```
+
+## Deployment
+
+The site is designed to be deployed on Cloudflare Pages. Cloudflare builds the Astro project and serves the generated static files from the `dist` directory.
+
+```txt
 Build command: npm run build
 Build output directory: dist
-Node version: 22.12.0 or newer
 ```
 
-After the first successful deploy, connect the custom domain:
+Every update pushed to the GitHub repository can trigger a new Cloudflare Pages deployment.
 
-```txt
-gsdeveloper.dev
-www.gsdeveloper.dev
-```
+## Purpose
 
-## Main Files To Edit
-
-```txt
-src/config/site.toml              Site identity, nav, homepage text
-src/content/about.mdx             About page
-src/content/projects/index.mdx    Projects page intro
-src/content/blog/                 Blog/dev notes
-src/styles/global.css             Global visual theme
-src/components/cards/IntroCard.astro
-src/components/cards/ProfileCard.astro
-```
-
-## Notes
-
-If `npm install` hangs, check network access to the npm registry:
-
-```bash
-npm view astro version
-```
-
-The project no longer requires Bun for normal development or production builds.
+The goal of this repository is to document my technical growth and present my work clearly to recruiters, collaborators, and other developers. It is both a portfolio website and a living record of the projects I am building while studying ICT, artificial intelligence, and telecommunications.
