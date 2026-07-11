@@ -1,0 +1,226 @@
+
+\documentclass[border=8pt, multi, tikz]{standalone} 
+\usepackage{import}
+\subimport{PlotNeuralNet/layers/}{init}
+\usetikzlibrary{positioning}
+\usetikzlibrary{3d} %for including external image 
+
+\def\ConvColor{rgb:yellow,5;red,2.5;white,5}
+\def\ConvReluColor{rgb:yellow,5;red,5;white,5}
+\def\PoolColor{rgb:red,1;black,0.3}
+\def\UnpoolColor{rgb:blue,2;green,1;black,0.3}
+\def\FcColor{rgb:blue,5;red,2.5;white,5}
+\def\FcReluColor{rgb:blue,5;red,5;white,4}
+\def\SoftmaxColor{rgb:magenta,5;black,7}   
+\def\SumColor{rgb:blue,5;green,15}
+
+\def\LstmColor{rgb:green,5;blue,2;white,6}
+\def\DenseColor{rgb:blue,5;red,2.5;white,5}
+\def\CatColor{rgb:blue,3;green,12;white,5}
+
+\newcommand{\copymidarrow}{\tikz \draw[-Stealth,line width=0.8mm,draw={rgb:blue,4;red,1;green,1;black,3}] (-0.3,0) -- ++(0.3,0);}
+
+\begin{document}
+\begin{tikzpicture}
+\tikzstyle{connection}=[ultra thick,every node/.style={sloped,allow upside down},draw=\edgecolor,opacity=0.7]
+\tikzstyle{copyconnection}=[ultra thick,every node/.style={sloped,allow upside down},draw={rgb:blue,4;red,1;green,1;black,3},opacity=0.7]
+
+\pic[shift={(0,0,0)}] at (0,0,0)
+    {Box={
+        name=input,
+        caption={\scriptsize I/Q input},
+        xlabel={{2, }},
+        zlabel={1024},
+        fill=\ConvColor,
+        opacity=0.9,
+        height=16,
+        width=1.0,
+        depth=46
+        }
+    };
+
+\pic[shift={(1.4,2.1,0)}] at (input-east) 
+    {Box={
+        name=conv_iq,
+        caption=\scriptsize Conv2D 2x8,
+        xlabel={{50, }},
+        zlabel=1024,
+        fill=\ConvColor,
+        height=22,
+        width=2,
+        depth=42
+        }
+    };
+
+\pic[shift={(1.4,0,0)}] at (input-east) 
+    {Box={
+        name=conv_i,
+        caption=\scriptsize I causal Conv1D,
+        xlabel={{50, }},
+        zlabel=1024,
+        fill=\ConvColor,
+        height=18,
+        width=2,
+        depth=42
+        }
+    };
+
+\pic[shift={(1.4,-2.1,0)}] at (input-east) 
+    {Box={
+        name=conv_q,
+        caption=\scriptsize Q causal Conv1D,
+        xlabel={{50, }},
+        zlabel=1024,
+        fill=\ConvColor,
+        height=18,
+        width=2,
+        depth=42
+        }
+    };
+
+\draw [connection]  (input-east)    -- node {\midarrow} (conv_iq-west);
+
+\draw [connection]  (input-east)    -- node {\midarrow} (conv_i-west);
+
+\draw [connection]  (input-east)    -- node {\midarrow} (conv_q-west);
+
+\pic[shift={(1.4,-1.0,0)}] at (conv_i-east)
+    {Ball={
+        name=cat_iq,
+        fill=\CatColor,
+        opacity=0.75,
+        radius=2.0,
+        logo=$\oplus$
+        }
+    };
+
+\draw [connection]  (conv_i-east)    -- node {\midarrow} (cat_iq-west);
+
+\draw [connection]  (conv_q-east)    -- node {\midarrow} (cat_iq-west);
+
+\pic[shift={(1.1,0,0)}] at (cat_iq-east) 
+    {Box={
+        name=conv_pair,
+        caption=\scriptsize Conv2D 1x8,
+        xlabel={{50, }},
+        zlabel=1024,
+        fill=\ConvColor,
+        height=22,
+        width=2,
+        depth=42
+        }
+    };
+
+\draw [connection]  (cat_iq-east)    -- node {\midarrow} (conv_pair-west);
+
+\pic[shift={(1.4,1.0,0)}] at (conv_pair-east)
+    {Ball={
+        name=cat_all,
+        fill=\CatColor,
+        opacity=0.75,
+        radius=2.0,
+        logo=$\oplus$
+        }
+    };
+
+\draw [connection]  (conv_iq-east)    -- node {\midarrow} (cat_all-west);
+
+\draw [connection]  (conv_pair-east)    -- node {\midarrow} (cat_all-west);
+
+\pic[shift={(1.2,0,0)}] at (cat_all-east) 
+    {Box={
+        name=conv4,
+        caption=\scriptsize Conv2D 2x5,
+        xlabel={{100, }},
+        zlabel=1020,
+        fill=\ConvColor,
+        height=28,
+        width=3,
+        depth=34
+        }
+    };
+
+\draw [connection]  (cat_all-east)    -- node {\midarrow} (conv4-west);
+
+\pic[shift={(1.0,0,0)}] at (conv4-east)
+    {Box={
+        name=seq,
+        caption={\scriptsize squeeze transpose},
+        xlabel={{100, }},
+        zlabel={1020},
+        fill=\DenseColor,
+        opacity=0.9,
+        height=22,
+        width=1.2,
+        depth=24
+        }
+    };
+
+\draw [connection]  (conv4-east)    -- node {\midarrow} (seq-west);
+
+\pic[shift={(1.1,0,0)}] at (seq-east)
+    {Box={
+        name=lstm1,
+        caption={\scriptsize LSTM},
+        xlabel={{128, }},
+        zlabel={1020},
+        fill=\LstmColor,
+        opacity=0.9,
+        height=22,
+        width=2.3,
+        depth=24
+        }
+    };
+
+\draw [connection]  (seq-east)    -- node {\midarrow} (lstm1-west);
+
+\pic[shift={(1.0,0,0)}] at (lstm1-east)
+    {Box={
+        name=lstm2,
+        caption={\scriptsize LSTM},
+        xlabel={{128, }},
+        zlabel={1020},
+        fill=\LstmColor,
+        opacity=0.9,
+        height=22,
+        width=2.3,
+        depth=24
+        }
+    };
+
+\draw [connection]  (lstm1-east)    -- node {\midarrow} (lstm2-west);
+
+\pic[shift={(1.2,0,0)}] at (lstm2-east)
+    {Box={
+        name=dense,
+        caption={\scriptsize Dense SELU Dropout},
+        xlabel={{128, 128, }},
+        zlabel={ },
+        fill=\DenseColor,
+        opacity=0.9,
+        height=18,
+        width=2.2,
+        depth=18
+        }
+    };
+
+\draw [connection]  (lstm2-east)    -- node {\midarrow} (dense-west);
+
+\pic[shift={(1.1,0,0)}] at (dense-east) 
+    {Box={
+        name=softmax,
+        caption=\scriptsize Softmax,
+        xlabel={{" ","dummy"}},
+        zlabel=24,
+        fill=\SoftmaxColor,
+        opacity=0.8,
+        height=15,
+        width=1.5,
+        depth=15
+        }
+    };
+
+\draw [connection]  (dense-east)    -- node {\midarrow} (softmax-west);
+
+\end{tikzpicture}
+\end{document}

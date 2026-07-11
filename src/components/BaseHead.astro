@@ -94,10 +94,9 @@ const { site } = await getSiteConfig();
     });
   })();
 </script>
-<link rel="icon" href={assetPath('favicon.svg')} sizes="any" />
-<link rel="icon" type="image/png" sizes="32x32" href={assetPath('favicon-32x32.png')} />
-<link rel="icon" type="image/png" sizes="16x16" href={assetPath('favicon-16x16.png')} />
-<link rel="apple-touch-icon" sizes="180x180" href={assetPath('apple-touch-icon.png')} />
+<link rel="icon" href={assetPath('images/gsdeveloper_3d_logo.svg')} type="image/svg+xml" />
+<link rel="alternate icon" href={assetPath('images/gsdeveloper_3d_logo.png')} type="image/png" />
+<link rel="apple-touch-icon" href={assetPath('images/gsdeveloper_3d_logo.png')} />
 <link rel="manifest" href={assetPath('manifest.json')} />
 <meta name="theme-color" content="#f8fbff" />
 <link rel="sitemap" href="/sitemap-index.xml" />
@@ -130,4 +129,3 @@ const { site } = await getSiteConfig();
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(imageUrl, Astro.url)} />
-

@@ -22,8 +22,7 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
     {
       quote && (
         <blockquote>
-          <span>{quote.text.slice(0, 2).join(' ')}</span>
-          <span>{quote.text.slice(2).join(' ')}</span>
+          <span>{quote.text.join(' ')}</span>
         </blockquote>
       )
     }
@@ -32,7 +31,7 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
     </div>
     <div class="intro-actions" aria-label="Primary actions">
       <a class="primary-action" href="/projects">View Projects</a>
-      <a class="secondary-action" href="mailto:santiagogonzalezcuellar@gmail.com?subject=Portfolio%20project">Start a Conversation</a>
+      <a class="secondary-action" href="/contact"> Start a Conversation </a>
     </div>
   </div>
 </article>
@@ -183,4 +182,3 @@ const { intro, quote } = Astro.props as { intro: Intro; quote?: Quote };
     }
   }
 </style>
-

@@ -1,0 +1,294 @@
+---
+import { Download, FileText, Github, Linkedin, Mail, Send } from 'lucide-astro';
+import ContactConstellation from '../components/contact/ContactConstellation.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const contactLinks = [
+  {
+    label: 'Email',
+    value: 'santiagogonzalezcuellar@gmail.com',
+    href: 'mailto:santiagogonzalezcuellar@gmail.com?subject=Portfolio%20contact',
+    icon: Mail,
+  },
+  {
+    label: 'GitHub',
+    value: 'github.com/Santiago244',
+    href: 'https://github.com/Santiago244',
+    icon: Github,
+  },
+  {
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/santiago-gonzalez-cuellar-a920801ab',
+    href: 'https://www.linkedin.com/in/santiago-gonzalez-cuellar-a920801ab/',
+    icon: Linkedin,
+  },
+];
+
+const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
+const cvPagePath = '/cv';
+---
+
+<BaseLayout
+  title="Contact | GS Developer"
+  description="Contact Cesar Santiago Gonzalez Cuellar through email, GitHub, LinkedIn, or download his CV."
+>
+  <ContactConstellation />
+
+  <main class="contact-shell" data-pagefind-body>
+    <section class="contact-hero" aria-label="Contact overview">
+      <p class="contact-kicker">Contact / Collaboration / CV</p>
+    </section>
+
+    <section class="contact-grid" aria-label="Contact options">
+      {
+        contactLinks.map((item) => {
+          const Icon = item.icon;
+
+          return (
+            <a class="contact-link" href={item.href} target="_blank" rel="noreferrer">
+              <span class="contact-icon" aria-hidden="true">
+                <Icon size={22} stroke-width={2} />
+              </span>
+              <span>
+                <strong>{item.label}</strong>
+                <small>{item.value}</small>
+              </span>
+              <Send size={18} stroke-width={2} aria-hidden="true" />
+            </a>
+          );
+        })
+      }
+    </section>
+
+    <section class="cv-panel" aria-labelledby="cv-title">
+      <span class="cv-icon" aria-hidden="true">
+        <FileText size={28} stroke-width={1.8} />
+      </span>
+      <div>
+        <p>Attached CV</p>
+        <h2 id="cv-title">Santiago Gonzalez</h2>
+        <span>Data science, ICT, telecommunications, software projects, and technical support.</span
+        >
+      </div>
+      <div class="cv-actions">
+        <a href={cvPagePath}>Open CV</a>
+        <a href={cvPath} download>
+          <Download size={17} stroke-width={2} aria-hidden="true" />
+          Download
+        </a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body) {
+    min-height: 100vh;
+    background: var(--paper-page-bg);
+  }
+
+  .contact-shell {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: min(100% - 32px, 1050px);
+    min-height: 100vh;
+    align-content: center;
+    gap: 28px;
+    margin: 0 auto;
+    padding: 132px 0 72px;
+  }
+
+  .contact-hero {
+    max-width: 780px;
+  }
+
+  .contact-kicker,
+  .cv-panel p {
+    margin: 0 0 12px;
+    color: var(--paper-accent);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+
+  h1 {
+    max-width: 10ch;
+    margin: 0;
+    color: var(--paper-ink);
+    font-family: var(--font-display);
+    font-size: clamp(3.4rem, 10vw, 8rem);
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 0.9;
+  }
+
+  .contact-hero > p:not(.contact-kicker) {
+    max-width: 62ch;
+    margin: 26px 0 0;
+    color: var(--paper-ink-soft);
+    font-size: clamp(1rem, 1.4vw, 1.18rem);
+    line-height: 1.75;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .contact-link,
+  .cv-panel {
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--paper-nav) 88%, transparent);
+    box-shadow: var(--paper-shadow);
+    backdrop-filter: blur(18px);
+  }
+
+  .contact-link {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr) 18px;
+    gap: 13px;
+    align-items: center;
+    min-height: 98px;
+    padding: 18px;
+    color: var(--paper-ink);
+    text-decoration: none;
+    transition:
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .contact-link:hover,
+  .contact-link:focus-visible {
+    border-color: var(--paper-line-strong);
+    color: var(--paper-accent);
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .contact-icon,
+  .cv-icon {
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-control);
+    color: var(--paper-accent);
+  }
+
+  .contact-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .contact-link strong,
+  .contact-link small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .contact-link strong {
+    font-family: var(--font-display);
+    font-size: 0.96rem;
+  }
+
+  .contact-link small {
+    margin-top: 3px;
+    color: var(--paper-ink-soft);
+    font-size: 0.82rem;
+  }
+
+  .cv-panel {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: center;
+    padding: 22px;
+  }
+
+  .cv-icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .cv-panel p {
+    margin-bottom: 5px;
+  }
+
+  .cv-panel h2 {
+    margin: 0;
+    color: var(--paper-ink);
+    font-size: clamp(1.3rem, 2vw, 1.85rem);
+    line-height: 1.15;
+  }
+
+  .cv-panel span {
+    display: block;
+    max-width: 62ch;
+    margin-top: 7px;
+    color: var(--paper-ink-soft);
+    line-height: 1.55;
+  }
+
+  .cv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .cv-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 0 15px;
+    border: 1px solid var(--paper-line-strong);
+    border-radius: 8px;
+    background: var(--paper-control);
+    color: var(--paper-ink);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .cv-actions a:hover,
+  .cv-actions a:focus-visible {
+    background: var(--paper-control-hover);
+    color: var(--paper-accent);
+    outline: none;
+  }
+
+  @media (max-width: 820px) {
+    .contact-shell {
+      width: min(100% - 24px, 560px);
+      align-content: start;
+      padding-top: 108px;
+    }
+
+    h1 {
+      max-width: 9ch;
+    }
+
+    .contact-grid,
+    .cv-panel {
+      grid-template-columns: 1fr;
+    }
+
+    .cv-actions {
+      justify-content: stretch;
+    }
+
+    .cv-actions a {
+      flex: 1 1 150px;
+    }
+  }
+</style>

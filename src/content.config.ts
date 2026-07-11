@@ -18,9 +18,12 @@ const sidebarSchema = z
 const remoteImageSchema = z
   .url()
   .refine((src) => /^https?:\/\//i.test(src), 'Remote images must start with http:// or https://');
+const publicImageSchema = z
+  .string()
+  .regex(/^\/images\/.+/i, 'Public images must start with /images/');
 
 const contentImageSchema = ({ image }: Parameters<CollectionSchemaFactory>[0]) =>
-  z.union([image(), remoteImageSchema]);
+  z.union([publicImageSchema, remoteImageSchema, image()]);
 
 const articleSchema = ({ image }: Parameters<CollectionSchemaFactory>[0]) =>
   z.object({
@@ -30,6 +33,7 @@ const articleSchema = ({ image }: Parameters<CollectionSchemaFactory>[0]) =>
     date: z.coerce.date(),
     draft: z.boolean().optional().default(false),
     heroImage: z.optional(contentImageSchema({ image })),
+    galleryImages: z.array(contentImageSchema({ image })).optional().default([]),
     showHeroImage: z.boolean().optional().default(true),
     tags: z.array(z.string()).optional().default([]),
     categories: z.array(z.string()).optional().default([]),
@@ -336,4 +340,3 @@ const vibe = defineCollection({
 });
 
 export const collections = { about, blog, projects, vibe, siteConfig };
-

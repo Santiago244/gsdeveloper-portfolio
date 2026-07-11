@@ -1,0 +1,46 @@
+<svg width="100%" viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg" role="img" style="">
+<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">3D toadstool mushroom logo for gsdeveloper in teal with black spots</title>
+<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">An original teal toadstool mushroom with black spots, rendered with 3D shading, with a GS monogram on the stem, representing a software developer brand.</desc>
+<defs>
+<linearGradient id="capGrad" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#6FCBA9"/>
+<stop offset="55%" stop-color="#2FAA82"/>
+<stop offset="100%" stop-color="#1F7A5C"/>
+</linearGradient>
+<linearGradient id="capShade" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#1F7A5C" stop-opacity="0"/>
+<stop offset="100%" stop-color="#124D3A" stop-opacity="0.55"/>
+</linearGradient>
+<linearGradient id="stemGrad" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="#FFFFFF"/>
+<stop offset="55%" stop-color="#F3F1E9"/>
+<stop offset="100%" stop-color="#D3D1C7"/>
+</linearGradient>
+</defs>
+
+
+<ellipse cx="340" cy="410" rx="110" ry="16" fill="#000000" opacity="0.12" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.12;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+
+<path d="M285,260 Q280,340 295,405 Q340,420 385,405 Q400,340 395,260 Z" fill="url(#stemGrad)" stroke="#B4B2A9" stroke-width="1" style="stroke:rgb(180, 178, 169);color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+<path d="M370,262 Q382,340 383,402 Q392,398 395,392 Q400,330 393,258 Z" fill="#B4B2A9" opacity="0.35" style="fill:rgb(180, 178, 169);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.35;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+
+<path d="M180,250 C180,140 260,70 340,70 C420,70 500,140 500,250 C500,270 480,278 460,270 C440,285 400,290 340,290 C280,290 240,285 220,270 C200,278 180,270 180,250 Z" fill="url(#capGrad)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<path d="M340,70 C420,70 500,140 500,250 C500,270 480,278 460,270 C440,285 400,290 340,290 Z" fill="url(#capShade)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+
+<path d="M195,255 C210,270 270,282 340,282 C410,282 460,272 485,255" fill="none" stroke="#124D3A" stroke-width="2" opacity="0.3" style="fill:none;stroke:rgb(18, 77, 58);color:rgb(11, 11, 11);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.3;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+
+<ellipse cx="270" cy="150" rx="26" ry="22" fill="#12211C" style="fill:rgb(18, 33, 28);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<ellipse cx="400" cy="135" rx="20" ry="17" fill="#12211C" style="fill:rgb(18, 33, 28);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<ellipse cx="340" cy="200" rx="30" ry="25" fill="#12211C" style="fill:rgb(18, 33, 28);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<ellipse cx="230" cy="215" rx="16" ry="14" fill="#12211C" style="fill:rgb(18, 33, 28);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<ellipse cx="450" cy="200" rx="18" ry="15" fill="#12211C" style="fill:rgb(18, 33, 28);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<ellipse cx="320" cy="110" rx="14" ry="12" fill="#12211C" style="fill:rgb(18, 33, 28);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+
+<text x="340" y="365" text-anchor="middle" font-family="var(--font-sans)" font-weight="500" font-size="34" fill="#5F5E5A" style="fill:rgb(95, 94, 90);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, sans-serif;font-size:34px;font-weight:500;text-anchor:middle;dominant-baseline:auto">GS</text>
+</svg>

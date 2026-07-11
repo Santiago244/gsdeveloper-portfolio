@@ -10,7 +10,10 @@ const { items } = Astro.props as { items: DoingItem[] };
 ---
 
 <article class="glass-card doing-card">
-  <h2><Icon name="calendar" /> Recently</h2>
+  <h2>
+    <Icon name="calendar" />
+    <span>Recently</span>
+  </h2>
   <ul>
     {
       items.map((item) => (
@@ -89,5 +92,3 @@ const { items } = Astro.props as { items: DoingItem[] };
     text-align: right;
   }
 </style>
-
-

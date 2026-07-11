@@ -1,0 +1,90 @@
+---
+title: 'TodoList Manager'
+description: 'A desktop task management app built with Java Swing and SQLite. Create, edit, filter, and export tasks with priorities, statuses, and due dates in a dark-themed UI.'
+date: 2026-07-11
+draft: false
+heroImage: '/images/main-dashboard-todolist.jpeg'
+galleryImages:
+  - '/images/main-dashboard-todolist.jpeg'
+  - '/images/login-todolist.jpeg'
+tags:
+  - Desktop App
+  - Java OOP
+  - SQLite
+  - Swing
+  - UNIZA
+categories:
+  - Projects
+  - Desktop Applications
+sidebar:
+  enable: true
+  toc: true
+  relatedPosts: false
+---
+
+TodoList Manager is a feature-rich desktop application for personal task management, built as a semester project for Java OOP 2 at UNIZA. It uses an MVC architecture with Java Swing for the interface, SQLite for local persistence, and Maven for dependency management.
+
+Users can create, edit, and delete tasks with a title, description, priority, status, and due date. The app includes real-time search, filtering by status and priority, sorting, automatic overdue detection, CSV export, task statistics, and user authentication with SHA-256 password hashing.
+
+<figure>
+  <img src="/images/login-todolist.jpeg" alt="TodoList Manager login screen" loading="lazy" />
+  <figcaption>Login screen showing the local authentication flow.</figcaption>
+</figure>
+
+## What It Solves
+
+The app helps users organize personal or academic work in one place instead of spreading tasks across notes, spreadsheets, or disconnected files. Tasks persist between sessions through SQLite, can be prioritized and tracked by status and due date, filtered quickly, searched in real time, and exported to CSV for backup or reporting.
+
+Because it is a local desktop application, it does not depend on cloud services or an internet connection.
+
+## Features
+
+- Create, edit, and delete tasks
+- Track task title, description, priority, status, and due date
+- Priorities: Low, Medium, High, Critical
+- Statuses: Todo, In Progress, Done, Overdue
+- Real-time search and filtering
+- Sorting by task fields
+- Automatic overdue detection
+- CSV export
+- Task statistics panel
+- User authentication with SHA-256 password hashing
+- Dark-themed Java Swing interface using FlatLaf
+
+## Architecture
+
+The interface is split into modular panels: a task form, a central table view, a top toolbar with filters and actions, and a bottom statistics panel. The project demonstrates OOP principles through MVC, singletons, observers, validation, and prepared statements for SQL injection prevention.
+
+## My Work
+
+I built the full application end to end: 17 Java classes including the GUI, task model and controller, SQLite persistence, user authentication, CSV export, UI panels, enums, theming, and Maven build configuration.
+
+Key classes include:
+
+- `Gui.java`
+- `Task.java`
+- `TaskController.java`
+- `DatabaseManager.java`
+- `TaskDBExecute.java`
+- `AuthManager.java`
+- `LoginDialog.java`
+- `User.java`
+- `CSV.java`
+- `TaskFormPanelWest`
+- `ViewTasksCenterPanel`
+- `UpperOptionsPanel`
+- `OverviewBottomPanel`
+- `Priority`
+- `Status`
+- `Theme.java`
+
+I also prepared the documentation, including `README.md`, `todolistdocs.md`, and project screenshots.
+
+## Technologies
+
+Java 25, Java Swing, Maven, SQLite, FlatLaf, OpenCSV, LGoodDatePicker, Gson, and SLF4J.
+
+## Links
+
+- [Source code on GitHub](https://github.com/Santiago244/java-todolist-semestralwork-2)
+- Live demo: not available because this is a desktop application.

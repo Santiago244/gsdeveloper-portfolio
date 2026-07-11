@@ -33,10 +33,12 @@
     "remark-math": "^6.0.0",
     "sharp": "^0.35.2",
     "smol-toml": "^1.7.0",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.1",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@astrojs/compiler": "^4.0.0",
+    "@types/three": "^0.185.1",
     "@typescript-eslint/parser": "^8.62.0",
     "eslint-plugin-deprecation": "^3.0.0",
     "husky": "^9.1.7",

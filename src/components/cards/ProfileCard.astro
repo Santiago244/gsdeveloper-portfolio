@@ -20,7 +20,12 @@ const { profile } = Astro.props as { profile: Profile };
   <div class="avatar-wrap">
     {
       profile.avatar ? (
-        <img src={profile.avatar} alt={`${profile.name} profile photo`} loading="eager" decoding="async" />
+        <img
+          src={profile.avatar}
+          alt={`${profile.name} profile photo`}
+          loading="eager"
+          decoding="async"
+        />
       ) : (
         <span aria-hidden="true">GS</span>
       )
@@ -31,7 +36,10 @@ const { profile } = Astro.props as { profile: Profile };
     <p class="eyebrow">{profile.company}</p>
     <h1>{profile.name}</h1>
     <p>{profile.handle}</p>
-    <span><Icon name="sparkle" /> {profile.role}</span>
+    <span class="role-line">
+      <Icon name="sparkle" />
+      <span>{profile.role}</span>
+    </span>
   </div>
 
   <dl class="profile-meta" aria-label="Profile details">
@@ -68,6 +76,7 @@ const { profile } = Astro.props as { profile: Profile };
     border-radius: 8px;
     background: linear-gradient(180deg, var(--paper-surface), var(--paper-surface-muted));
     box-shadow: var(--paper-shadow-lift);
+    overflow: hidden;
   }
 
   .avatar-wrap::after {
@@ -79,15 +88,16 @@ const { profile } = Astro.props as { profile: Profile };
   }
 
   .avatar-wrap img {
-    position: absolute;
-    inset: 12px;
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
+    inset: -34px;
+    width: calc(100% + 68px);
+    height: calc(100% + 68px);
     border-radius: 6px;
-    object-fit: cover;
+    object-fit: contain;
+    transform: scale(1.12);
   }
 
   .avatar-wrap span {
+    margin-left: auto;
     color: var(--paper-ink);
     font-family: var(--font-display);
     font-size: clamp(3rem, 8vw, 4.8rem);
@@ -120,7 +130,7 @@ const { profile } = Astro.props as { profile: Profile };
     font-size: 0.94rem;
   }
 
-  .profile-heading span {
+  .profile-heading .role-line {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -177,7 +187,7 @@ const { profile } = Astro.props as { profile: Profile };
       margin-left: auto;
     }
 
-    .profile-heading span {
+    .profile-heading .role-line {
       justify-content: center;
     }
 
@@ -186,4 +196,3 @@ const { profile } = Astro.props as { profile: Profile };
     }
   }
 </style>
-

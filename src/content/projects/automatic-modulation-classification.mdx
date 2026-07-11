@@ -1,0 +1,159 @@
+---
+title: 'Machine Learning for Classification of RF Signals'
+description: 'Deep learning system for automatic modulation classification of radio-frequency signals using the RadioML 2018.01A dataset.'
+date: 2026-07-10
+draft: false
+heroImage: '/images/visualizations/by_model/resnet1d/presentation/09_accuracy_vs_snr_resnet1d_slide.png'
+galleryImages:
+  - '/images/visualizations/by_model/resnet1d/presentation/09_accuracy_vs_snr_resnet1d_slide.png'
+  - '/images/visualizations/by_model/resnet1d/presentation/10_confusion_matrix_resnet1d_diagonal_annotated.png'
+  - '/images/visualizations/by_model/resnet1d/presentation/01_learning_curves_resnet1d.png'
+  - '/images/visualizations/by_model/resnet1d/presentation/02_summary_metrics_resnet1d.png'
+  - '/images/visualizations/by_model/resnet1d/presentation/11_confusion_matrix_resnet1d_diagonal_percent_only.png'
+  - '/images/visualizations/by_model/resnet1d/presentation/12_confusion_matrix_resnet1d_diagonal_percent_black.png'
+  - '/images/visualizations/models/cnn1.jpeg'
+  - '/images/visualizations/models/cnnlstm.jpeg'
+  - '/images/visualizations/models/resnet1d.jpeg'
+tags:
+  - Machine Learning
+  - PyTorch
+  - Telecommunications
+  - RF Signals
+  - Docker
+categories:
+  - Projects
+  - Machine Learning
+sidebar:
+  enable: true
+  toc: true
+  relatedPosts: false
+---
+
+Machine Learning for Classification of RF Signals is a university project for Automatic Modulation Classification, also known as AMC. The system classifies radio-frequency signals into 24 modulation types across 26 SNR levels, from -20 dB to +30 dB, using the RadioML 2018.01A dataset.
+
+The project compares several deep learning architectures under a controlled protocol. Every model uses the same stratified 60/20/20 train, validation, and test split, the same random seed, optimizer, learning rate, batch size, epoch budget, and evaluation procedure. This makes the comparison focused on model behavior instead of accidental training differences.
+
+## What It Solves
+
+Automatic Modulation Classification identifies the modulation scheme of a received RF signal, such as BPSK, QPSK, QAM, or OFDM, from raw I/Q samples without manual feature engineering.
+
+This matters in spectrum monitoring, cognitive radio, interference or jamming detection, and adaptive communication systems, where the receiver needs to understand the signal type before demodulation or channel adaptation.
+
+## Dataset
+
+The project uses RadioML 2018.01A, a large labeled RF dataset with 2.55 million I/Q signal samples. The split pipeline preserves the relationship between 24 modulation classes and 26 SNR levels, producing 624 stratified groups for fair training and evaluation.
+
+## Models Compared
+
+The final results focus on three project-specific PyTorch architectures:
+
+- CNN1D
+- CNN-LSTM
+- ResNet1D
+
+The strongest portfolio result currently comes from ResNet1D, with an overall test accuracy of about 59%. The accuracy-vs-SNR plot shows the expected RF behavior: performance is weak at very low SNR values and improves as the signal becomes cleaner.
+
+<figure>
+  <img
+    src="/images/visualizations/by_model/resnet1d/presentation/09_accuracy_vs_snr_resnet1d_slide.png"
+    alt="ResNet1D accuracy versus SNR for automatic modulation classification"
+    loading="lazy"
+  />
+  <figcaption>
+    ResNet1D accuracy by SNR level, used as the main portfolio thumbnail for the project.
+  </figcaption>
+</figure>
+
+<figure>
+  <img
+    src="/images/visualizations/by_model/resnet1d/presentation/10_confusion_matrix_resnet1d_diagonal_annotated.png"
+    alt="Annotated ResNet1D confusion matrix for RF modulation classes"
+    loading="lazy"
+  />
+  <figcaption>
+    Annotated confusion matrix showing where the model separates or confuses modulation classes.
+  </figcaption>
+</figure>
+
+## Pipeline
+
+The project includes an end-to-end training and evaluation workflow:
+
+- HDF5 dataset loading
+- Stratified train, validation, and test split
+- YAML-based experiment configuration
+- Model factory pattern
+- PyTorch training with early stopping
+- Test-set evaluation with accuracy, precision, recall, and F1
+- Per-SNR and per-class metrics
+- Confusion matrix generation
+- Cross-model KPI comparison
+- MATLAB visualization export
+- Docker and Docker Compose setup for reproducible GPU runs
+
+## Architecture Snapshots
+
+These diagrams show the three project-specific PyTorch baseline architectures. CNN1D focuses on local RF signal features, CNN-LSTM adds temporal sequence modeling, and ResNet1D uses residual one-dimensional blocks to support deeper feature extraction.
+
+<figure>
+  <img
+    src="/images/visualizations/models/cnn1.jpeg"
+    alt="CNN1D architecture for automatic modulation classification"
+    loading="lazy"
+  />
+  <figcaption>CNN1D baseline architecture.</figcaption>
+</figure>
+
+<figure>
+  <img
+    src="/images/visualizations/models/cnnlstm.jpeg"
+    alt="CNN-LSTM architecture for automatic modulation classification"
+    loading="lazy"
+  />
+  <figcaption>CNN-LSTM baseline architecture.</figcaption>
+</figure>
+
+<figure>
+  <img
+    src="/images/visualizations/models/resnet1d.jpeg"
+    alt="ResNet1D architecture for automatic modulation classification"
+    loading="lazy"
+  />
+  <figcaption>ResNet1D baseline architecture.</figcaption>
+</figure>
+
+## My Work
+
+I built the end-to-end PyTorch training and evaluation pipeline, including `src/train.py`, `src/evaluate.py`, `src/dataset.py`, and `src/utils.py`.
+
+I also implemented the stratified RadioML split pipeline, custom PyTorch baselines, YAML experiment configs, cross-model comparison tooling, MATLAB visualization scripts, and Docker-based reproducible training.
+
+This work supports my academic thesis, Machine Learning for Classification of RF Signals, developed at UNIZA in 2026.
+
+## Technologies
+
+Python, PyTorch, NumPy, HDF5/h5py, scikit-learn, Matplotlib, Seaborn, YAML, tqdm, Docker, Docker Compose, MATLAB, CUDA/GPU, and the RadioML 2018.01A dataset.
+
+## Documentation
+
+The full project documentation is available as a PDF for readers who want the academic and implementation details behind the portfolio summary.
+
+<p>
+  <a href="/files/GonzalezCuellar_PIKT_2026.pdf" target="_blank" rel="noreferrer">
+    Open full project documentation
+  </a>
+</p>
+
+<iframe
+  src="/files/GonzalezCuellar_PIKT_2026.pdf"
+  title="Machine Learning for Classification of RF Signals project documentation"
+  width="100%"
+  height="720"
+  loading="lazy"
+  style="border: 1px solid var(--paper-line); border-radius: 8px; background: var(--paper-surface);"
+></iframe>
+
+## Links
+
+- [Source code on GitHub](https://github.com/Santiago244/AMC-DL-Models-ProjectIKT)
+- Live demo: not available because this is an offline ML research and training project.

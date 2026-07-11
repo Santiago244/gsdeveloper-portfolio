@@ -75,7 +75,7 @@ email = "santiagogonzalezcuellar@gmail.com"
 website = "https://gsdeveloper.dev/"
 github = "https://github.com/Santiago244"
 meta = "HTML, CSS, SCSS, JavaScript, Java, Python, C, APIs, Docker, SQLite, SQLAlchemy, networking"
-avatar = "/images/logo.png"
+avatar = "/images/gsdeveloper_3d_logo.png"
 
 [[config.topNav.links]]
 label = "Home"
@@ -95,7 +95,7 @@ href = "/about"
 
 [[config.topNav.links]]
 label = "Contact"
-href = "mailto:santiagogonzalezcuellar@gmail.com"
+href = "/contact"
 
 [config.home]
 layout = "grid"
@@ -104,17 +104,17 @@ layout = "grid"
 text = [
   "Exploring the intersection of artificial intelligence, data science, and telecommunications.",
 ]
-image = "/images/logo-with-name.png"
+image = "/images/gsdeveloper_3d_logo.png"
 
 [config.home.intro]
 title = "ICT Student • Telecommunications"
 name = "Data Scientist"
 body = [
-  "I am Cesar Santiago Gonzalez Cuellar, an ICT student at the University of Žilina passionate about applying machine learning to wireless communication systems.",
+  "I am Santiago Gonzalez, an ICT student at the University of Žilina passionate about applying machine learning to wireless communication systems.",
   "My recent work includes developing deep learning models for Automatic Modulation Classification and analyzing RF signal datasets, while continuing to build practical software using Python, Java, databases, and modern web technologies.",
-  "I enjoy turning complex engineering problems into intelligent, data-driven solutions.",
+  "I enjoy understanding complex engineering problems and their solutions.",
 ]
-image = "/images/logo-cat.png"
+image = "/images/gsdeveloper_3d_logo.png"
 
 [config.home.latest]
 count = 1
@@ -164,8 +164,8 @@ href = "/projects"
 icon = "repo"
 
 [[config.home.connect]]
-label = "Email"
-href = "mailto:santiagogonzalezcuellar@gmail.com"
+label = "Contact"
+href = "/contact"
 icon = "mail"
 
 [[config.home.doing]]

@@ -4,4 +4,3 @@ root_selector: main
 force_language: en
 exclude_selectors:
   - '[data-pagefind-ignore]'
-

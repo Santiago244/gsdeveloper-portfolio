@@ -17,13 +17,11 @@ function withBase(href: string) {
   <main class="not-found-shell" aria-labelledby="not-found-title">
     <section class="not-found-panel">
       <p class="not-found-kicker">404 Not Found</p>
-      <h1 id="not-found-title">这页还没有落在纸上</h1>
-      <p class="not-found-copy">
-        也许链接换了位置，也许这只是一次走岔的小路。先回到熟悉的入口，继续慢慢翻。
-      </p>
+      <h1 id="not-found-title">Page Not Found</h1>
+      <p class="not-found-copy">The page you are looking for does not exist or has been moved.</p>
       <nav class="not-found-actions" aria-label="404 page links">
-        <a class="primary-link" href={withBase('/')}>回到首页</a>
-        <a href={withBase('/blog')}>去博客</a>
+        <a class="primary-link" href={withBase('/')}>Return to Home</a>
+        <a href={withBase('/blog')}>Visit Blog</a>
       </nav>
     </section>
   </main>

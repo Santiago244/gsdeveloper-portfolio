@@ -1,0 +1,147 @@
+---
+import { Download, ExternalLink } from 'lucide-astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
+---
+
+<BaseLayout
+  title="CV | Cesar Santiago Gonzalez Cuellar"
+  description="Curriculum vitae for Cesar Santiago Gonzalez Cuellar."
+>
+  <main class="cv-shell" data-pagefind-ignore>
+    <section class="cv-toolbar" aria-label="CV actions">
+      <div>
+        <p>Curriculum Vitae</p>
+        <h1>Cesar Santiago Gonzalez Cuellar</h1>
+      </div>
+      <div class="cv-actions">
+        <a href={cvPath} target="_blank" rel="noreferrer">
+          <ExternalLink size={17} stroke-width={2} aria-hidden="true" />
+          Raw PDF
+        </a>
+        <a href={cvPath} download>
+          <Download size={17} stroke-width={2} aria-hidden="true" />
+          Download
+        </a>
+      </div>
+    </section>
+
+    <iframe src={cvPath} title="CV PDF for Cesar Santiago Gonzalez Cuellar" loading="eager"
+    ></iframe>
+  </main>
+</BaseLayout>
+
+<style>
+  :global(body) {
+    min-height: 100vh;
+    background: var(--paper-page-bg);
+  }
+
+  .cv-shell {
+    display: grid;
+    grid-template-rows: auto minmax(620px, 1fr);
+    width: min(100% - 24px, 1160px);
+    min-height: 100vh;
+    gap: 14px;
+    margin: 0 auto;
+    padding: 112px 0 28px;
+  }
+
+  .cv-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 16px;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--paper-nav) 90%, transparent);
+    box-shadow: var(--paper-shadow);
+    backdrop-filter: blur(16px);
+  }
+
+  .cv-toolbar p {
+    margin: 0 0 4px;
+    color: var(--paper-accent);
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--paper-ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.2vw, 1.65rem);
+    letter-spacing: 0;
+    line-height: 1.15;
+  }
+
+  .cv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .cv-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 13px;
+    border: 1px solid var(--paper-line-strong);
+    border-radius: 8px;
+    background: var(--paper-control);
+    color: var(--paper-ink);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .cv-actions a:hover,
+  .cv-actions a:focus-visible {
+    background: var(--paper-control-hover);
+    color: var(--paper-accent);
+    outline: none;
+  }
+
+  iframe {
+    width: 100%;
+    min-height: 620px;
+    height: calc(100vh - 220px);
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-nav);
+  }
+
+  @media (max-width: 680px) {
+    .cv-shell {
+      grid-template-rows: auto minmax(520px, 1fr);
+      padding-top: 104px;
+    }
+
+    .cv-toolbar {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .cv-actions {
+      justify-content: stretch;
+    }
+
+    .cv-actions a {
+      flex: 1 1 130px;
+    }
+
+    iframe {
+      min-height: 520px;
+      height: calc(100vh - 290px);
+    }
+  }
+</style>

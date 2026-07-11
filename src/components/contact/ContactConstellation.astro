@@ -1,0 +1,290 @@
+<div class="contact-constellation" data-contact-constellation aria-hidden="true"></div>
+
+<script>
+  import * as THREE from 'three';
+
+  const initContactConstellation = () => {
+    for (const container of document.querySelectorAll('[data-contact-constellation]')) {
+      if (!(container instanceof HTMLElement) || container.dataset.ready === 'true') continue;
+      container.dataset.ready = 'true';
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+      const renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+        preserveDrawingBuffer: true,
+      });
+      const group = new THREE.Group();
+      const panelGroup = new THREE.Group();
+      const clock = new THREE.Clock();
+      const resources: Array<THREE.Texture | THREE.BufferGeometry | THREE.Material> = [];
+
+      camera.position.set(0, 0, 6.4);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+      container.append(renderer.domElement);
+      scene.add(group);
+      group.add(panelGroup);
+      type PanelTextureOptions = {
+        title: string;
+        subtitle: string;
+        rows: string[];
+        width?: number;
+        height?: number;
+      };
+
+      const makePanelTexture = ({
+        title,
+        subtitle,
+        rows,
+        width = 720,
+        height = 460,
+      }: PanelTextureOptions) => {
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext('2d');
+        if (!context) return null;
+
+        const gradient = context.createLinearGradient(0, 0, width, height);
+        gradient.addColorStop(0, 'rgba(6, 12, 24, 0.96)');
+        gradient.addColorStop(0.55, 'rgba(7, 21, 38, 0.92)');
+        gradient.addColorStop(1, 'rgba(2, 6, 14, 0.96)');
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, width, height);
+
+        context.strokeStyle = 'rgba(125, 211, 252, 0.44)';
+        context.lineWidth = 2;
+        context.strokeRect(18, 18, width - 36, height - 36);
+
+        context.fillStyle = 'rgba(56, 189, 248, 0.14)';
+        context.fillRect(34, 34, width - 68, 54);
+        context.fillStyle = '#7dd3fc';
+        context.font = '700 28px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+        context.fillText(title, 52, 69);
+
+        context.fillStyle = '#d9f4ff';
+        context.font = '600 52px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+        context.fillText(subtitle, 52, 150);
+
+        context.fillStyle = 'rgba(216, 244, 255, 0.66)';
+        context.font = '500 25px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
+        rows.forEach((row, index) => {
+          const y = 226 + index * 54;
+          context.fillStyle =
+            index % 2 === 0 ? 'rgba(14, 165, 233, 0.1)' : 'rgba(255, 255, 255, 0.035)';
+          context.fillRect(52, y - 30, width - 104, 42);
+          context.fillStyle = '#bfefff';
+          context.fillText(row, 72, y);
+        });
+
+        context.fillStyle = 'rgba(125, 211, 252, 0.62)';
+        for (let index = 0; index < 18; index += 1) {
+          const x = 52 + index * 34;
+          context.fillRect(x, height - 58, 18, 4);
+        }
+
+        const texture = new THREE.CanvasTexture(canvas);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = 4;
+        resources.push(texture);
+        return texture;
+      };
+      const makePanel = (
+        texture: THREE.Texture,
+        width: number,
+        height: number,
+        position: [number, number, number],
+        rotation: [number, number, number],
+        opacity = 0.86,
+      ) => {
+        const geometry = new THREE.PlaneGeometry(width, height);
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          transparent: true,
+          opacity,
+          side: THREE.DoubleSide,
+        });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.set(...position);
+        mesh.rotation.set(...rotation);
+        panelGroup.add(mesh);
+        resources.push(geometry, material);
+        return mesh;
+      };
+
+      const mainTexture = makePanelTexture({
+        title: 'CONTACT INTERFACE',
+        subtitle: 'Cesar Santiago',
+        rows: [
+          'Email  santiagogonzalezcuellar@gmail.com',
+          'GitHub github.com/Santiago244',
+          'CV     Data Science + ICT',
+        ],
+      });
+      const signalTexture = makePanelTexture({
+        title: 'SIGNAL STATUS',
+        subtitle: 'Open to Build',
+        rows: ['ML + RF datasets', 'Astro + Java + Python', 'Telecom systems'],
+        width: 560,
+        height: 360,
+      });
+      const cvTexture = makePanelTexture({
+        title: 'ATTACHED FILE',
+        subtitle: 'CV Ready',
+        rows: ['Profile   Data Scientist', 'Focus     ICT Student', 'Mode      Collaboration'],
+        width: 560,
+        height: 360,
+      });
+
+      if (mainTexture) {
+        makePanel(mainTexture, 3.45, 2.2, [1.25, 0.18, -0.25], [-0.08, -0.34, 0.03], 0.88);
+      }
+
+      if (signalTexture) {
+        makePanel(signalTexture, 1.95, 1.26, [-1.88, 1.08, -1.1], [0.08, 0.42, -0.08], 0.64);
+      }
+
+      if (cvTexture) {
+        makePanel(cvTexture, 1.95, 1.26, [-1.78, -1.12, -0.86], [-0.1, 0.36, 0.08], 0.58);
+      }
+
+      const edgeGeometry = new THREE.BufferGeometry();
+      edgeGeometry.setAttribute(
+        'position',
+        new THREE.Float32BufferAttribute(
+          [
+            -0.75, 0.72, -0.7, -1.3, 0.9, -0.95, -0.8, -0.7, -0.7, -1.22, -0.96, -0.86, 2.32, 0.88,
+            -0.2, 2.75, 1.14, -0.55, 2.24, -0.94, -0.2, 2.72, -1.1, -0.5,
+          ],
+          3,
+        ),
+      );
+      const edgeMaterial = new THREE.LineBasicMaterial({
+        color: 0x38bdf8,
+        transparent: true,
+        opacity: 0.42,
+      });
+      const edges = new THREE.LineSegments(edgeGeometry, edgeMaterial);
+      panelGroup.add(edges);
+      resources.push(edgeGeometry, edgeMaterial);
+
+      const particleCount = 140;
+      const positions = new Float32Array(particleCount * 3);
+
+      for (let index = 0; index < particleCount; index += 1) {
+        positions[index * 3] = (Math.random() - 0.5) * 8.2;
+        positions[index * 3 + 1] = (Math.random() - 0.5) * 4.6;
+        positions[index * 3 + 2] = (Math.random() - 0.5) * 3.6 - 0.7;
+      }
+
+      const particleGeometry = new THREE.BufferGeometry();
+      particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const particleMaterial = new THREE.PointsMaterial({
+        color: 0x38bdf8,
+        size: 0.025,
+        transparent: true,
+        opacity: 0.78,
+      });
+
+      const particles = new THREE.Points(particleGeometry, particleMaterial);
+      group.add(particles);
+      resources.push(particleGeometry, particleMaterial);
+
+      let panelBaseY = 0;
+      const resize = () => {
+        const width = container.clientWidth || 1;
+        const height = container.clientHeight || 1;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height, false);
+
+        if (width < 760) {
+          panelGroup.position.set(0.15, -0.65, -0.6);
+          panelGroup.scale.setScalar(0.68);
+        } else {
+          panelGroup.position.set(1.35, 0, 0);
+          panelGroup.scale.setScalar(1);
+        }
+
+        panelBaseY = panelGroup.position.y;
+      };
+
+      const pointer = { x: 0, y: 0 };
+      const handlePointerMove = (event: PointerEvent) => {
+        const bounds = container.getBoundingClientRect();
+        pointer.x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 0.45;
+        pointer.y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 0.45;
+      };
+
+      let frame = 0;
+      const render = () => {
+        const elapsed = clock.getElapsedTime();
+        const speed = prefersReducedMotion ? 0.05 : 1;
+
+        panelGroup.rotation.y = Math.sin(elapsed * 0.28) * 0.07 * speed + pointer.x;
+        panelGroup.rotation.x = Math.sin(elapsed * 0.2) * 0.035 * speed + pointer.y;
+        panelGroup.position.y = panelBaseY + Math.sin(elapsed * 0.58) * 0.035 * speed;
+        particles.rotation.y = elapsed * 0.018 * speed;
+
+        renderer.render(scene, camera);
+        frame = window.requestAnimationFrame(render);
+      };
+
+      const observer = new ResizeObserver(resize);
+      observer.observe(container);
+      window.addEventListener('pointermove', handlePointerMove);
+      resize();
+      render();
+
+      document.addEventListener(
+        'astro:before-swap',
+        () => {
+          window.cancelAnimationFrame(frame);
+          observer.disconnect();
+          window.removeEventListener('pointermove', handlePointerMove);
+          for (const resource of resources) {
+            resource.dispose();
+          }
+          renderer.dispose();
+        },
+        { once: true },
+      );
+    }
+  };
+
+  initContactConstellation();
+  document.addEventListener('astro:page-load', initContactConstellation);
+</script>
+
+<style>
+  .contact-constellation {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    min-height: 100vh;
+    background:
+      linear-gradient(135deg, rgba(14, 165, 233, 0.08), transparent 38%),
+      linear-gradient(90deg, rgba(125, 211, 252, 0.055) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(125, 211, 252, 0.04) 1px, transparent 1px), var(--paper-page-bg);
+    background-size:
+      auto,
+      68px 68px,
+      68px 68px,
+      auto;
+    pointer-events: none;
+  }
+
+  .contact-constellation canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-constellation {
+      pointer-events: none;
+    }
+  }
+</style>

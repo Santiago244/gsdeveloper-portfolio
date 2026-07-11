@@ -15,6 +15,13 @@ type Props = CollectionEntry<'projects'>;
 
 const project = Astro.props;
 const { Content, headings } = await render(project);
+
+function getImageSrc(image: ImageMetadata | string | undefined) {
+  if (!image) return '';
+  return typeof image === 'string' ? image : image.src;
+}
+
+const galleryImages = project.data.galleryImages.map(getImageSrc).filter(Boolean);
 ---
 
 <BlogArticle
@@ -23,4 +30,84 @@ const { Content, headings } = await render(project);
   sidebar={{ enable: false, ...project.data.sidebar }}
 >
   <Content />
+
+  {
+    galleryImages.length > 0 && (
+      <section class="project-gallery" aria-label={`${project.data.title} visuals`}>
+        {galleryImages.map((src, index) => (
+          <figure class="project-gallery-card">
+            <img src={src} alt={`${project.data.title} visual ${index + 1}`} loading="lazy" />
+          </figure>
+        ))}
+      </section>
+    )
+  }
 </BlogArticle>
+
+<style>
+  .project-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 34px;
+    perspective: 1100px;
+  }
+
+  .project-gallery-card {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-surface);
+    box-shadow: var(--paper-shadow);
+    transform: translateY(0) rotateX(0deg) rotateY(0deg);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .project-gallery-card:nth-child(2n) {
+    transform: translateY(10px) rotateY(-2deg);
+  }
+
+  .project-gallery-card:nth-child(3n) {
+    transform: translateY(4px) rotateY(2deg);
+  }
+
+  .project-gallery-card:hover,
+  .project-gallery-card:focus-within {
+    border-color: var(--paper-line-strong);
+    box-shadow:
+      0 18px 42px rgba(2, 6, 23, 0.2),
+      0 0 0 1px color-mix(in srgb, var(--paper-accent) 18%, transparent);
+    transform: translateY(-6px) rotateX(2deg) rotateY(-3deg);
+  }
+
+  .project-gallery-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  @media (max-width: 860px) {
+    .project-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .project-gallery-card,
+    .project-gallery-card:nth-child(2n),
+    .project-gallery-card:nth-child(3n) {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-gallery-card {
+      transition: none;
+      transform: none;
+    }
+  }
+</style>

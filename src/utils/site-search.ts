@@ -34,6 +34,18 @@ let pagefindPromise: Promise<PagefindModule> | null = null;
 let lastFocusedElement: HTMLElement | null = null;
 const searchLayers = new WeakMap<HTMLElement, HTMLElement>();
 
+function getLanguage() {
+  return document.documentElement.dataset.language === 'es' ? 'es' : 'en';
+}
+
+function getResultCountLabel(count: number) {
+  if (getLanguage() === 'es') {
+    return `${count} resultado${count === 1 ? '' : 's'}`;
+  }
+
+  return `${count} result${count === 1 ? '' : 's'}`;
+}
+
 function getSearchSurface(root: HTMLElement) {
   return searchLayers.get(root) ?? root;
 }
@@ -70,13 +82,14 @@ function getResultPath(url: string) {
 
 function getResultKind(url: string) {
   const path = getResultPath(url);
+  const language = getLanguage();
 
-  if (/^\/blog\/[^/]+\/?$/.test(path)) return 'Blog note';
-  if (path.startsWith('/blog')) return 'Blog index';
+  if (/^\/blog\/[^/]+\/?$/.test(path)) return language === 'es' ? 'Nota de blog' : 'Blog note';
+  if (path.startsWith('/blog')) return language === 'es' ? 'Indice del blog' : 'Blog index';
   if (path.startsWith('/vibe')) return 'Vibe';
-  if (path.startsWith('/projects')) return 'Project';
+  if (path.startsWith('/projects')) return language === 'es' ? 'Proyecto' : 'Project';
 
-  return 'Page';
+  return language === 'es' ? 'Pagina' : 'Page';
 }
 
 function getResultTitle(result: Awaited<ReturnType<PagefindResult['data']>>) {
@@ -162,7 +175,7 @@ function renderResults(root: HTMLElement, results: Awaited<ReturnType<PagefindRe
     meta.textContent = `${getResultKind(result.url)} - ${getResultPath(result.url)}`;
     match.className = 'site-search-result-match';
     matchLabel.className = 'site-search-result-match-label';
-    matchLabel.textContent = 'Matched passage';
+    matchLabel.textContent = getLanguage() === 'es' ? 'Pasaje coincidente' : 'Matched passage';
     excerpt.className = 'site-search-result-excerpt';
     excerpt.innerHTML = result.excerpt;
 
@@ -248,7 +261,7 @@ export function initSiteSearch() {
         setStatus(
           root,
           resultData.length > 0
-            ? `${resultData.length} result${resultData.length === 1 ? '' : 's'}`
+            ? getResultCountLabel(resultData.length)
             : root.dataset.searchEmptyLabel || 'No notes found.',
         );
       } catch {

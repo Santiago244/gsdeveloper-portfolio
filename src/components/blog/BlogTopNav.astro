@@ -50,6 +50,7 @@ const routeLabels: Record<string, string> = {
   '/vibe': 'vibe',
   '/archive': 'archive',
   '/about': 'about',
+  '/contact': 'contact',
 };
 const activeRoute = Object.entries(routeLabels).find(
   ([route]) => currentPath === route || currentPath.startsWith(`${route}/`),
@@ -71,7 +72,14 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
   </button>
 
   <a class="brand" href={withBase('/')} aria-label={`Go to ${site.title} home`}>
-    <span class="brand-mark" aria-hidden="true"></span>
+    <img
+      class="brand-mark"
+      src={withBase('/images/gsdeveloper_3d_logo.png')}
+      alt=""
+      aria-hidden="true"
+      loading="eager"
+      decoding="async"
+    />
     <span class="brand-title">
       <span>{site.title}</span>
       {brandRouteLabel && <span class="brand-route"> · {brandRouteLabel}</span>}
@@ -87,11 +95,11 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
             aria-disabled="true"
             title="Projects content placeholder"
           >
-            {link.label}
+            <span>{link.label}</span>
           </span>
         ) : (
           <a class:list={['nav-link', { active: isActive(link.href) }]} href={withBase(link.href)}>
-            {link.label}
+            <span>{link.label}</span>
           </a>
         ),
       )
@@ -108,7 +116,7 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
       links.map((link) =>
         link.disabled ? (
           <span class="mobile-menu-link mobile-menu-placeholder" aria-disabled="true">
-            {link.label}
+            <span>{link.label}</span>
           </span>
         ) : (
           <a
@@ -116,7 +124,7 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
             href={withBase(link.href)}
             data-mobile-menu-link
           >
-            {link.label}
+            <span>{link.label}</span>
           </a>
         ),
       )
@@ -371,11 +379,12 @@ const shouldShowTocAction = showTocIcon && tocItems.length > 0;
   }
 
   .brand-mark {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: var(--paper-accent);
-    box-shadow: none;
+    width: 24px;
+    height: 24px;
+    background-color: transparent !important;
+    object-fit: contain;
+    transform: scale(2.55);
+    transform-origin: center;
   }
 
   .nav-links {

@@ -27,6 +27,22 @@ function withBase(href: string) {
 
   return `${basePath}${href.startsWith('/') ? href : `/${href}`}`;
 }
+
+function getImageSrc(image: ImageMetadata | string | undefined) {
+  if (!image) return '';
+  return typeof image === 'string' ? image : image.src;
+}
+
+function getProjectImages(project: (typeof projects)[number]) {
+  const images =
+    project.data.galleryImages.length > 0
+      ? project.data.galleryImages
+      : project.data.heroImage
+        ? [project.data.heroImage]
+        : [];
+
+  return images.map(getImageSrc).filter(Boolean).slice(0, 3);
+}
 ---
 
 <BlogArticle
@@ -42,22 +58,40 @@ function withBase(href: string) {
   {
     relatedProjects.length > 0 ? (
       <section class="project-grid" aria-label="Projects">
-        {relatedProjects.map((project) => (
-          <a class="project-card" href={withBase(`/projects/${project.id}/`)}>
-            <span class="project-meta">
-              <FormattedDate date={project.data.date} />
-            </span>
-            <h2>{project.data.title}</h2>
-            <p>{project.data.description}</p>
-            {project.data.tags.length > 0 && (
-              <span class="project-tags" aria-label="Project tags">
-                {project.data.tags.slice(0, 3).map((tag) => (
-                  <small>{tag}</small>
-                ))}
+        {relatedProjects.map((project) => {
+          const cardImages = getProjectImages(project);
+
+          return (
+            <a class="project-card" href={withBase(`/projects/${project.id}/`)} data-project-card>
+              {cardImages.length > 0 && (
+                <span class="project-visual-stack" aria-hidden="true">
+                  {cardImages.map((src, index) => (
+                    <span
+                      class="project-visual-card"
+                      style={`--card-index: ${index}; --card-offset: ${index - (cardImages.length - 1) / 2};`}
+                    >
+                      <img src={src} alt="" loading="lazy" />
+                    </span>
+                  ))}
+                </span>
+              )}
+              <span class="project-card-body">
+                <span class="project-meta">
+                  <FormattedDate date={project.data.date} />
+                </span>
+                <h2>{project.data.title}</h2>
+                <p>{project.data.description}</p>
+                {project.data.tags.length > 0 && (
+                  <span class="project-tags" aria-label="Project tags">
+                    {project.data.tags.slice(0, 3).map((tag) => (
+                      <small>{tag}</small>
+                    ))}
+                  </span>
+                )}
               </span>
-            )}
-          </a>
-        ))}
+            </a>
+          );
+        })}
       </section>
     ) : (
       <section class="project-empty" aria-label="Projects empty state">
@@ -71,6 +105,37 @@ function withBase(href: string) {
     )
   }
 </BlogArticle>
+
+<script>
+  const initProjectCards = () => {
+    for (const card of document.querySelectorAll<HTMLElement>('[data-project-card]')) {
+      if (card.dataset.tiltReady === 'true') continue;
+      card.dataset.tiltReady = 'true';
+
+      const resetTilt = () => {
+        card.style.setProperty('--tilt-x', '0deg');
+        card.style.setProperty('--tilt-y', '0deg');
+        card.style.setProperty('--lift', '0px');
+      };
+
+      card.addEventListener('pointermove', (event) => {
+        const bounds = card.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+
+        card.style.setProperty('--tilt-x', `${(-y * 8).toFixed(2)}deg`);
+        card.style.setProperty('--tilt-y', `${(x * 9).toFixed(2)}deg`);
+        card.style.setProperty('--lift', '-6px');
+      });
+
+      card.addEventListener('pointerleave', resetTilt);
+      card.addEventListener('blur', resetTilt);
+    }
+  };
+
+  initProjectCards();
+  document.addEventListener('astro:page-load', initProjectCards);
+</script>
 
 <style>
   .project-meta,
@@ -89,8 +154,9 @@ function withBase(href: string) {
   .project-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: 18px;
     margin-top: 34px;
+    perspective: 1200px;
   }
 
   .project-card,
@@ -102,22 +168,131 @@ function withBase(href: string) {
   }
 
   .project-card {
+    --lift: 0px;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
     display: grid;
-    gap: 12px;
-    min-height: 210px;
-    padding: 22px;
+    grid-template-rows: auto 1fr;
+    gap: 0;
+    min-height: 420px;
+    overflow: hidden;
+    padding: 0;
     color: var(--paper-ink);
     text-decoration: none;
     transition:
-      transform 180ms ease,
+      box-shadow 180ms ease,
       border-color 180ms ease,
       background 180ms ease;
+    transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y))
+      translateY(var(--lift));
+    transform-style: preserve-3d;
+    will-change: transform;
   }
 
-  .project-card:hover {
+  .project-card:hover,
+  .project-card:focus-visible {
     border-color: var(--paper-line-strong);
     background: var(--paper-control-hover);
-    transform: translateY(-1px);
+    box-shadow:
+      0 18px 44px rgba(2, 6, 23, 0.22),
+      0 0 0 1px color-mix(in srgb, var(--paper-accent) 18%, transparent);
+    outline: none;
+  }
+
+  .project-card:focus-visible {
+    --lift: -6px;
+    --tilt-x: 4deg;
+    --tilt-y: -5deg;
+  }
+
+  .project-visual-stack {
+    position: relative;
+    display: grid;
+    min-height: 236px;
+    padding: 24px 22px 18px;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid var(--paper-line);
+    background:
+      radial-gradient(
+        circle at 22% 12%,
+        color-mix(in srgb, var(--paper-accent) 20%, transparent),
+        transparent 32%
+      ),
+      linear-gradient(135deg, var(--paper-control), var(--paper-surface));
+    transform: translateZ(26px);
+  }
+
+  .project-visual-stack::after {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--paper-accent) 28%, transparent),
+        transparent 34%
+      ),
+      linear-gradient(0deg, rgba(2, 6, 23, 0.2), transparent 50%);
+    content: '';
+    opacity: 0.62;
+    pointer-events: none;
+    transition: opacity 180ms ease;
+  }
+
+  .project-card:hover .project-visual-stack::after,
+  .project-card:focus-visible .project-visual-stack::after {
+    opacity: 0.32;
+  }
+
+  .project-visual-card {
+    grid-area: 1 / 1;
+    align-self: center;
+    justify-self: center;
+    width: min(100%, 380px);
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--paper-line-strong) 78%, transparent);
+    border-radius: 8px;
+    background: var(--paper-surface);
+    box-shadow:
+      0 18px 34px rgba(2, 6, 23, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    transform: translateX(calc(var(--card-offset) * 18px))
+      translateY(calc(var(--card-index) * 10px)) translateZ(calc((3 - var(--card-index)) * 16px))
+      rotate(calc(var(--card-offset) * -3deg));
+    transition:
+      transform 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  .project-card:hover .project-visual-card,
+  .project-card:focus-visible .project-visual-card {
+    box-shadow:
+      0 24px 48px rgba(2, 6, 23, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    transform: translateX(calc(var(--card-offset) * 24px)) translateY(calc(var(--card-index) * 6px))
+      translateZ(calc((3 - var(--card-index)) * 24px)) rotate(calc(var(--card-offset) * -4deg));
+  }
+
+  .project-visual-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 220ms ease;
+  }
+
+  .project-card:hover img,
+  .project-card:focus-visible img {
+    transform: scale(1.035);
+  }
+
+  .project-card-body {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    padding: 20px;
+    transform: translateZ(18px);
   }
 
   .project-meta,
@@ -171,6 +346,30 @@ function withBase(href: string) {
     .project-card,
     .project-empty {
       padding: 20px;
+    }
+
+    .project-card {
+      min-height: 0;
+      padding: 0;
+    }
+
+    .project-visual-stack {
+      min-height: 212px;
+      padding: 20px 16px 16px;
+    }
+
+    .project-visual-card {
+      transform: translateX(calc(var(--card-offset) * 10px))
+        translateY(calc(var(--card-index) * 8px)) rotate(calc(var(--card-offset) * -2deg));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-visual-card,
+    .project-visual-card img {
+      transition: none;
+      transform: none;
     }
   }
 </style>
