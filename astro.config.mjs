@@ -14,7 +14,10 @@ import tailwindcss from '@tailwindcss/vite';
 import expressiveCode from 'astro-expressive-code';
 
 const siteToml = parse(fs.readFileSync(new URL('./src/config/site.toml', import.meta.url), 'utf8'));
-const configuredMathRenderer = siteToml.config?.math?.render;
+const siteConfig = /** @type {{ math?: { render?: string } }} */ (
+  /** @type {Record<string, unknown>} */ (siteToml).config ?? {}
+);
+const configuredMathRenderer = siteConfig.math?.render;
 const mathRenderer = configuredMathRenderer === 'mathjax' ? 'mathjax' : 'katex';
 
 const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';

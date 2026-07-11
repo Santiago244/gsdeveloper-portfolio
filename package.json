@@ -2,6 +2,7 @@
   "name": "gsdeveloper-portfolio",
   "type": "module",
   "version": "0.2.0",
+  "packageManager": "npm@11.16.0",
   "engines": {
     "node": ">=22.12.0"
   },
