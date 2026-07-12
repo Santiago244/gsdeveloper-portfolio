@@ -3,7 +3,6 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
-import FallbackImage from '../assets/figure/fail-loading-image.png';
 import { getSiteConfig } from '../data/site';
 import { ClientRouter } from 'astro:transitions';
 
@@ -16,7 +15,7 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`;
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image = '/images/aboutme/sample-bg.png' } = Astro.props;
 const imageUrl = typeof image === 'string' ? image : image.src;
 const { site } = await getSiteConfig();
 ---
@@ -94,9 +93,13 @@ const { site } = await getSiteConfig();
     });
   })();
 </script>
-<link rel="icon" href={assetPath('images/gsdeveloper_3d_logo.svg')} type="image/svg+xml" />
-<link rel="alternate icon" href={assetPath('images/gsdeveloper_3d_logo.png')} type="image/png" />
-<link rel="apple-touch-icon" href={assetPath('images/gsdeveloper_3d_logo.png')} />
+<link rel="icon" href={assetPath('images/aboutme/gsdeveloper_3d_logo.svg')} type="image/svg+xml" />
+<link
+  rel="alternate icon"
+  href={assetPath('images/aboutme/gsdeveloper_3d_logo.png')}
+  type="image/png"
+/>
+<link rel="apple-touch-icon" href={assetPath('images/aboutme/gsdeveloper_3d_logo.png')} />
 <link rel="manifest" href={assetPath('manifest.json')} />
 <meta name="theme-color" content="#f8fbff" />
 <link rel="sitemap" href="/sitemap-index.xml" />
