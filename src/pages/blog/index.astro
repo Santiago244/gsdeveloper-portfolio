@@ -5,12 +5,15 @@ import Footer from '../../components/Footer.astro';
 import BlogTopNav from '../../components/blog/BlogTopNav.astro';
 import BlogArchive from '../../components/blog/BlogArchive.astro';
 import GroupNav from '../../components/blog/GroupNav.astro';
+import MediumArticleList from '../../components/blog/MediumArticleList.astro';
+import { curatedMediumArticles } from '../../data/medium-articles';
 import { getSiteConfig } from '../../data/site';
 import { sortByDateDesc } from '../../utils/content-dates';
 
 const { site, theme, blog } = await getSiteConfig();
 const palette = theme.palette;
 const posts = sortByDateDesc(await getCollection('blog', ({ data }) => !data.draft));
+const mediumArticles = curatedMediumArticles;
 const postsPerPage = blog.postsPerPage;
 const totalPages = Math.max(1, Math.ceil(posts.length / postsPerPage));
 const page = {
@@ -48,7 +51,10 @@ const page = {
     <BlogTopNav />
     <main data-pagefind-body>
       <BlogArchive page={page}>
-        <GroupNav slot="after-header" />
+        <Fragment slot="after-header">
+          <GroupNav />
+          <MediumArticleList articles={mediumArticles} />
+        </Fragment>
       </BlogArchive>
     </main>
     <Footer />

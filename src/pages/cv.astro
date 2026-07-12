@@ -1,5 +1,6 @@
 ---
 import { Download, ExternalLink } from 'lucide-astro';
+import FungusMascot from '../components/FungusMascot.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
@@ -25,6 +26,7 @@ const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
           Download
         </a>
       </div>
+      <FungusMascot />
     </section>
 
     <iframe src={cvPath} title="CV PDF for Cesar Santiago Gonzalez Cuellar" loading="eager"
@@ -59,6 +61,12 @@ const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
     background: color-mix(in srgb, var(--paper-nav) 90%, transparent);
     box-shadow: var(--paper-shadow);
     backdrop-filter: blur(16px);
+  }
+
+  .cv-toolbar :global(.fungus-mascot) {
+    flex: 0 0 auto;
+    width: 112px;
+    margin-left: auto;
   }
 
   .cv-toolbar p {
@@ -129,6 +137,10 @@ const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
     .cv-toolbar {
       align-items: stretch;
       flex-direction: column;
+    }
+
+    .cv-toolbar :global(.fungus-mascot) {
+      margin-left: 0;
     }
 
     .cv-actions {

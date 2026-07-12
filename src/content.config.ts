@@ -124,6 +124,18 @@ const defaultCommentsConfig = {
   waline: typeof defaultWalineConfig;
 };
 
+const defaultMediumConfig = {
+  enabled: true,
+  username: '',
+  feedUrl: '',
+  maxPosts: 6,
+} satisfies {
+  enabled: boolean;
+  username: string;
+  feedUrl: string;
+  maxPosts: number;
+};
+
 const linkSchema = z.object({
   label: z.string(),
   href: z.string(),
@@ -262,6 +274,15 @@ const siteConfig = defineCollection({
       .default({
         postsPerPage: 6,
       }),
+    medium: z
+      .object({
+        enabled: z.boolean().optional().default(defaultMediumConfig.enabled),
+        username: z.string().optional().default(defaultMediumConfig.username),
+        feedUrl: z.string().optional().default(defaultMediumConfig.feedUrl),
+        maxPosts: z.number().int().positive().optional().default(defaultMediumConfig.maxPosts),
+      })
+      .optional()
+      .default(defaultMediumConfig),
     home: z.object({
       layout: z.enum(['grid']),
       quote: z.object({

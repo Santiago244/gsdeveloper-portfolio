@@ -1,8 +1,8 @@
 [config.site]
 title = "GS Developer"
-description = "Portfolio of Cesar Santiago Gonzalez Cuellar, an ICT student focused on data science, artificial intelligence, and telecommunications."
-pageTitle = "GS Developer | Cesar Santiago Gonzalez Cuellar"
-pageDescription = "Portfolio for Cesar Santiago Gonzalez Cuellar: data science, machine learning, RF signal analysis, software projects, and telecommunications-focused systems."
+description = "Portfolio of Santiago Gonzalez , an ICT student focused on data science, artificial intelligence, and telecommunications."
+pageTitle = "GS Developer | Santiago Gonzalez "
+pageDescription = "Portfolio for Santiago Gonzalez : data science, machine learning, RF signal analysis, software projects, and telecommunications-focused systems."
 repository = "https://github.com/Santiago244"
 footerNote = "Built with Astro and deployed with Cloudflare Pages."
 
@@ -36,6 +36,12 @@ maxResults = 6
 
 [config.blog]
 postsPerPage = 6
+
+[config.medium]
+enabled = true
+username = "santiagogonzalezcuellar"
+feedUrl = ""
+maxPosts = 6
 
 [config.comments.giscus]
 repo = ""
@@ -75,7 +81,7 @@ email = "santiagogonzalezcuellar@gmail.com"
 website = "https://gsdeveloper.dev/"
 github = "https://github.com/Santiago244"
 meta = "HTML, CSS, SCSS, JavaScript, Java, Python, C, APIs, Docker, SQLite, SQLAlchemy, networking"
-avatar = "/images/gsdeveloper_3d_logo.png"
+avatar = "/images/aboutme/gsdeveloper_3d_logo.png"
 
 [[config.topNav.links]]
 label = "Home"
@@ -104,7 +110,7 @@ layout = "grid"
 text = [
   "Exploring the intersection of artificial intelligence, data science, and telecommunications.",
 ]
-image = "/images/gsdeveloper_3d_logo.png"
+image = "/images/aboutme/gsdeveloper_3d_logo.png"
 
 [config.home.intro]
 title = "ICT Student • Telecommunications"

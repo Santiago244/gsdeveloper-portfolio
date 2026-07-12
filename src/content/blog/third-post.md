@@ -2,7 +2,7 @@
 title: 'Ideas for the First Three Projects'
 description: 'A short planning note for turning learning work into portfolio-ready project pages.'
 date: '2026-06-28T00:20:00+02:00'
-draft: false
+draft: true
 showHeroImage: false
 tags:
   - Projects

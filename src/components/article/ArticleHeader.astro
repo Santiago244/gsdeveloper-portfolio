@@ -2,6 +2,7 @@
 import SmartImage from '../SmartImage.astro';
 import PageView from '../comments/PageView.astro';
 import FormattedDate from '../FormattedDate.astro';
+import FungusMascot from '../FungusMascot.astro';
 import Icon from '../Icon.astro';
 
 interface Props {
@@ -55,114 +56,133 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
   {
     isArchiveHeader ? (
       <>
-        <div class="archive-heading archive-header-main">
-          <p class="archive-kicker">{kicker}</p>
-          <h1 class="archive-title" data-pagefind-meta="title">
-            {title}
-          </h1>
-          <div class="meta-line" aria-label="Article metadata">
-            {date && (
-              <span class="meta-item">
-                <FormattedDate date={date} />
-              </span>
-            )}
-            <span class="meta-item">{wordCountLabel}</span>
-            <span class="meta-item">{readingTime}</span>
-            {showPageView && <PageView pathname={pathname} />}
-            {hasTags && (
-              <span class="meta-item tag-list">
-                {tags.map((tag) => (
-                  <span class="tag">#{tag}</span>
-                ))}
-              </span>
-            )}
-          </div>
-          {hasGroups && (
-            <div class="group-meta-line" aria-label="Article groups">
-              {hasCategories && (
-                <span class="group-meta-item">
-                  <Icon name="folder" size={15} />
-                  <span class="group-label">Categories</span>
-                  <span class="group-list">
-                    {categories.map((category) => (
-                      <a class="group-link" href={`${basePath}/blog/categories/${category.slug}/`}>
-                        {category.name}
-                      </a>
-                    ))}
-                  </span>
+        <div class="archive-header-row">
+          <div class="archive-heading archive-header-main">
+            <p class="archive-kicker">{kicker}</p>
+            <h1 class="archive-title" data-pagefind-meta="title">
+              {title}
+            </h1>
+            <div class="meta-line" aria-label="Article metadata">
+              {date && (
+                <span class="meta-item">
+                  <FormattedDate date={date} />
                 </span>
               )}
-              {hasSeries && (
-                <span class="group-meta-item">
-                  <Icon name="layers" size={15} />
-                  <span class="group-label">Series</span>
-                  <span class="group-list">
-                    {series.map((item) => (
-                      <a class="group-link" href={`${basePath}/blog/series/${item.slug}/`}>
-                        {item.name}
-                        {item.current && item.total ? ` ${item.current}/${item.total}` : ''}
-                      </a>
-                    ))}
-                  </span>
+              <span class="meta-item">{wordCountLabel}</span>
+              <span class="meta-item">{readingTime}</span>
+              {showPageView && <PageView pathname={pathname} />}
+              {hasTags && (
+                <span class="meta-item tag-list">
+                  {tags.map((tag) => (
+                    <span class="tag">#{tag}</span>
+                  ))}
                 </span>
               )}
             </div>
-          )}
+            {description && <p class="article-description archive-description">{description}</p>}
+            {hasGroups && (
+              <div class="group-meta-line" aria-label="Article groups">
+                {hasCategories && (
+                  <span class="group-meta-item">
+                    <Icon name="folder" size={15} />
+                    <span class="group-label">Categories</span>
+                    <span class="group-list">
+                      {categories.map((category) => (
+                        <a
+                          class="group-link"
+                          href={`${basePath}/blog/categories/${category.slug}/`}
+                        >
+                          {category.name}
+                        </a>
+                      ))}
+                    </span>
+                  </span>
+                )}
+                {hasSeries && (
+                  <span class="group-meta-item">
+                    <Icon name="layers" size={15} />
+                    <span class="group-label">Series</span>
+                    <span class="group-list">
+                      {series.map((item) => (
+                        <a class="group-link" href={`${basePath}/blog/series/${item.slug}/`}>
+                          {item.name}
+                          {item.current && item.total ? ` ${item.current}/${item.total}` : ''}
+                        </a>
+                      ))}
+                    </span>
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+          <div class="header-mascot" aria-hidden="true">
+            <FungusMascot />
+          </div>
         </div>
-        {description && <p class="archive-note">{description}</p>}
       </>
     ) : (
       <>
-        <h1 data-pagefind-meta="title">{title}</h1>
+        <div class="standard-header-row">
+          <div>
+            <h1 data-pagefind-meta="title">{title}</h1>
 
-        <div class="meta-line" aria-label="Article metadata">
-          {date && (
-            <span class="meta-item">
-              <FormattedDate date={date} />
-            </span>
-          )}
-          <span class="meta-item">{wordCountLabel}</span>
-          <span class="meta-item">{readingTime}</span>
-          {showPageView && <PageView pathname={pathname} />}
-          {hasTags && (
-            <span class="meta-item tag-list">
-              {tags.map((tag) => (
-                <span class="tag">#{tag}</span>
-              ))}
-            </span>
-          )}
-        </div>
-        {hasGroups && (
-          <div class="group-meta-line" aria-label="Article groups">
-            {hasCategories && (
-              <span class="group-meta-item">
-                <Icon name="folder" size={15} />
-                <span class="group-label">Categories</span>
-                <span class="group-list">
-                  {categories.map((category) => (
-                    <a class="group-link" href={`${basePath}/blog/categories/${category.slug}/`}>
-                      {category.name}
-                    </a>
+            <div class="meta-line" aria-label="Article metadata">
+              {date && (
+                <span class="meta-item">
+                  <FormattedDate date={date} />
+                </span>
+              )}
+              <span class="meta-item">{wordCountLabel}</span>
+              <span class="meta-item">{readingTime}</span>
+              {showPageView && <PageView pathname={pathname} />}
+              {hasTags && (
+                <span class="meta-item tag-list">
+                  {tags.map((tag) => (
+                    <span class="tag">#{tag}</span>
                   ))}
                 </span>
-              </span>
-            )}
-            {hasSeries && (
-              <span class="group-meta-item">
-                <Icon name="layers" size={15} />
-                <span class="group-label">Series</span>
-                <span class="group-list">
-                  {series.map((item) => (
-                    <a class="group-link" href={`${basePath}/blog/series/${item.slug}/`}>
-                      {item.name}
-                      {item.current && item.total ? ` ${item.current}/${item.total}` : ''}
-                    </a>
-                  ))}
-                </span>
-              </span>
+              )}
+            </div>
+            {description && <p class="article-description">{description}</p>}
+            {hasGroups && (
+              <div class="group-meta-line" aria-label="Article groups">
+                {hasCategories && (
+                  <span class="group-meta-item">
+                    <Icon name="folder" size={15} />
+                    <span class="group-label">Categories</span>
+                    <span class="group-list">
+                      {categories.map((category) => (
+                        <a
+                          class="group-link"
+                          href={`${basePath}/blog/categories/${category.slug}/`}
+                        >
+                          {category.name}
+                        </a>
+                      ))}
+                    </span>
+                  </span>
+                )}
+                {hasSeries && (
+                  <span class="group-meta-item">
+                    <Icon name="layers" size={15} />
+                    <span class="group-label">Series</span>
+                    <span class="group-list">
+                      {series.map((item) => (
+                        <a class="group-link" href={`${basePath}/blog/series/${item.slug}/`}>
+                          {item.name}
+                          {item.current && item.total ? ` ${item.current}/${item.total}` : ''}
+                        </a>
+                      ))}
+                    </span>
+                  </span>
+                )}
+              </div>
             )}
           </div>
-        )}
+          <div class="header-mascot" aria-hidden="true">
+            <FungusMascot />
+          </div>
+        </div>
       </>
     )
   }
@@ -178,6 +198,7 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <style>
   .article-header {
+    position: relative;
     display: grid;
     gap: 14px;
     width: 100%;
@@ -190,8 +211,55 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
     margin-bottom: 54px;
   }
 
+  .article-header.archive-header-shared {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .archive-heading {
     min-width: 0;
+  }
+
+  .archive-header-row,
+  .standard-header-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(18px, 5vw, 56px);
+    align-items: start;
+    min-height: 138px;
+    padding-right: clamp(136px, 18vw, 210px);
+  }
+
+  .standard-header-row {
+    width: 100%;
+  }
+
+  .header-mascot {
+    position: absolute;
+    top: -10px;
+    right: 0;
+    z-index: 0;
+    width: clamp(112px, 14vw, 172px);
+    height: clamp(112px, 14vw, 172px);
+    overflow: hidden;
+    contain: strict;
+    isolation: isolate;
+    pointer-events: none;
+  }
+
+  .header-mascot :global(.fungus-mascot) {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+  }
+
+  .archive-heading,
+  .standard-header-row > div:first-child {
+    position: relative;
+    z-index: 1;
   }
 
   h1 {
@@ -221,6 +289,19 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
     font-size: 0.84rem;
     font-weight: 600;
     line-height: 1.5;
+  }
+
+  .article-description {
+    max-width: 68ch;
+    margin: 14px 0 0;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-serif-cn);
+    font-size: 0.98rem;
+    line-height: 1.72;
+  }
+
+  .archive-description {
+    max-width: 62ch;
   }
 
   .meta-item {
@@ -328,6 +409,24 @@ const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
 
     .article-header-archive {
       margin-bottom: 34px;
+    }
+
+    .archive-header-row,
+    .standard-header-row {
+      grid-template-columns: 1fr;
+      gap: 14px;
+      min-height: 0;
+      padding-right: 96px;
+      padding-bottom: 0;
+    }
+
+    .header-mascot {
+      top: 0;
+      right: 0;
+      bottom: auto;
+      left: auto;
+      width: 82px;
+      height: 82px;
     }
 
     h1 {

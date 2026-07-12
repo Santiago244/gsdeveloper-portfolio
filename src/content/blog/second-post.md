@@ -2,7 +2,7 @@
 title: 'From Template to Personal System'
 description: 'Notes on combining Navfolio structure with an agency-style visual theme for a developer portfolio.'
 date: '2026-06-28T00:10:00+02:00'
-draft: false
+draft: true
 showHeroImage: false
 tags:
   - Design

@@ -50,6 +50,6 @@
     "typescript": "^5.9.3"
   },
   "lint-staged": {
-    "*": "npm run format:check"
+    "*.{astro,css,html,js,json,md,mdx,mjs,ts,toml,yaml,yml}": "prettier --write --ignore-unknown"
   }
 }

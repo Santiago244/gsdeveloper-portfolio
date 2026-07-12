@@ -1,16 +1,21 @@
 ---
-const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
+interface Props {
+  label?: string;
+}
+
+const { label = 'Animated GS Developer mascot' } = Astro.props;
+const mascotSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
 ---
 
-<div class="contact-fungus-field" data-contact-fungus-field data-src={fungusSrc} aria-hidden="true">
-  <img class="contact-fungus-fallback" src={fungusSrc} alt="" loading="eager" decoding="async" />
-</div>
+<figure class="fungus-mascot" aria-label={label} data-fungus-mascot data-src={mascotSrc}>
+  <img class="fungus-fallback" src={mascotSrc} alt="" loading="eager" decoding="async" />
+</figure>
 
 <script>
   import * as THREE from 'three/src/Three.js';
 
-  const initContactFungusField = () => {
-    for (const container of document.querySelectorAll('[data-contact-fungus-field]')) {
+  const initFungusMascots = () => {
+    for (const container of document.querySelectorAll('[data-fungus-mascot]')) {
       if (!(container instanceof HTMLElement) || container.dataset.ready === 'true') continue;
       container.dataset.ready = 'true';
 
@@ -31,8 +36,8 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
       let points: THREE.Points | undefined;
       let material: THREE.ShaderMaterial | undefined;
 
-      camera.position.set(0, 0, 7.2);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+      camera.position.set(0, 0, 6);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
       container.append(renderer.domElement);
 
       const resize = () => {
@@ -41,16 +46,10 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
         renderer.setSize(width, height, false);
-
-        if (points) {
-          const isMobile = width < 780;
-          points.position.set(isMobile ? 0.25 : 1.75, isMobile ? 1.15 : 0.18, -0.7);
-          points.scale.setScalar(isMobile ? 1.28 : 1.72);
-        }
       };
 
       const makeParticleData = (image: HTMLImageElement) => {
-        const sampleSize = 176;
+        const sampleSize = 148;
         const canvas = document.createElement('canvas');
         canvas.width = sampleSize;
         canvas.height = sampleSize;
@@ -77,7 +76,7 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
           for (let x = 0; x < sampleSize; x += 1) {
             const alpha = pixels[(y * sampleSize + x) * 4 + 3];
 
-            if (alpha < 38) continue;
+            if (alpha < 42) continue;
 
             const weight = alpha / 255;
             weightedX += x * weight;
@@ -96,31 +95,31 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
         const visibleCenterY =
           hasVisiblePixels && totalWeight > 0 ? weightedY / totalWeight : sampleSize / 2;
         const visibleSize = hasVisiblePixels ? Math.max(maxX - minX, maxY - minY, 1) : sampleSize;
-        const scale = 3.36 / visibleSize;
+        const scale = 3.08 / visibleSize;
 
         for (let y = 0; y < sampleSize; y += step) {
           for (let x = 0; x < sampleSize; x += step) {
             const offset = (y * sampleSize + x) * 4;
             const alpha = pixels[offset + 3];
 
-            if (alpha < 38 || Math.random() < 0.18) continue;
+            if (alpha < 42 || Math.random() < 0.08) continue;
 
             const red = pixels[offset] / 255;
             const green = pixels[offset + 1] / 255;
             const blue = pixels[offset + 2] / 255;
             const normalizedX = (x - visibleCenterX) * scale;
             const normalizedY = -(y - visibleCenterY) * scale;
-            const radius = 2.5 + Math.random() * 5.2;
-            const angle = Math.atan2(normalizedY, normalizedX) + (Math.random() - 0.5) * 2.8;
+            const radius = 1.95 + Math.random() * 2.85;
+            const angle = Math.atan2(normalizedY, normalizedX) + (Math.random() - 0.5) * 2.6;
 
-            targets.push(normalizedX, normalizedY, (Math.random() - 0.5) * 0.18);
+            targets.push(normalizedX, normalizedY, (Math.random() - 0.5) * 0.08);
             scatters.push(
-              Math.cos(angle) * radius + (Math.random() - 0.5) * 1.8,
-              Math.sin(angle) * radius + (Math.random() - 0.5) * 1.8,
-              (Math.random() - 0.5) * 5.2,
+              Math.cos(angle) * radius + (Math.random() - 0.5) * 1.4,
+              Math.sin(angle) * radius + (Math.random() - 0.5) * 1.4,
+              (Math.random() - 0.5) * 3.4,
             );
-            colors.push(Math.max(red, 0.1), Math.max(green, 0.38), Math.max(blue, 0.62));
-            sizes.push(14 + Math.random() * 20);
+            colors.push(red, green, blue);
+            sizes.push(16 + Math.random() * 14);
           }
         }
 
@@ -146,10 +145,9 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
           depthWrite: false,
           blending: THREE.AdditiveBlending,
           uniforms: {
-            uProgress: { value: prefersReducedMotion ? 0 : 0.15 },
+            uProgress: { value: prefersReducedMotion ? 0 : 0.08 },
             uTime: { value: 0 },
-            uPixelRatio: { value: Math.min(window.devicePixelRatio, 1.6) },
-            uOpacity: { value: 0.72 },
+            uPixelRatio: { value: Math.min(window.devicePixelRatio, 1.8) },
           },
           vertexShader: `
             attribute vec3 targetPosition;
@@ -163,39 +161,37 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
             varying float vAlpha;
 
             void main() {
-              float wave = sin((targetPosition.x * 2.6) + (targetPosition.y * 1.9) + (uTime * 2.0)) * 0.18;
-              vec3 burst = scatterPosition + vec3(wave, -wave * 0.42, sin(uTime + scatterPosition.x) * 0.28);
+              float wave = sin((targetPosition.x * 2.2) + (targetPosition.y * 1.4) + (uTime * 2.4)) * 0.12;
+              vec3 burst = scatterPosition + vec3(wave, -wave * 0.35, sin(uTime + scatterPosition.x) * 0.18);
               vec3 positionNow = mix(targetPosition, burst, uProgress);
 
               vColor = particleColor;
-              vAlpha = 1.0 - (uProgress * 0.26);
+              vAlpha = 1.0 - (uProgress * 0.2);
 
               vec4 mvPosition = modelViewMatrix * vec4(positionNow, 1.0);
               gl_Position = projectionMatrix * mvPosition;
-              gl_PointSize = particleSize * uPixelRatio * (0.78 / -mvPosition.z);
+              gl_PointSize = particleSize * uPixelRatio * (0.72 / -mvPosition.z);
             }
           `,
           fragmentShader: `
-            uniform float uOpacity;
             varying vec3 vColor;
             varying float vAlpha;
 
             void main() {
               vec2 center = gl_PointCoord - vec2(0.5);
-              float circle = 1.0 - smoothstep(0.2, 0.5, length(center));
-              gl_FragColor = vec4(vColor, circle * vAlpha * uOpacity);
+              float circle = 1.0 - smoothstep(0.22, 0.5, length(center));
+              gl_FragColor = vec4(vColor, circle * vAlpha);
             }
           `,
         });
 
         points = new THREE.Points(geometry, material);
-        points.position.set(1.75, 1.8, -1.5);
-        points.rotation.z = -0.9;
-        points.scale.setScalar(1.72);
+        // Visual correction for the source logo's asymmetric shape inside the circular frame.
+        points.position.set(-0.34, 0.12, 0);
+        points.rotation.z = -0.08;
         scene.add(points);
         resources.push(geometry, material);
         container.dataset.webglReady = 'true';
-        resize();
       };
 
       const image = new Image();
@@ -206,14 +202,14 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
       const pointer = { x: 0, y: 0 };
       const handlePointerMove = (event: PointerEvent) => {
         const bounds = container.getBoundingClientRect();
-        pointer.x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 0.32;
-        pointer.y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 0.22;
+        pointer.x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 0.34;
+        pointer.y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 0.28;
       };
 
       const render = () => {
         const elapsed = clock.getElapsedTime();
-        const cycle = (Math.sin(elapsed * 0.9) + 1) / 2;
-        const pulse = prefersReducedMotion ? 0 : 0.12 + Math.pow(cycle, 2.1) * 0.72;
+        const cycle = (Math.sin(elapsed * 1.15) + 1) / 2;
+        const pulse = prefersReducedMotion ? 0 : Math.pow(cycle, 2.4) * 0.92;
 
         if (material) {
           material.uniforms.uTime.value = elapsed;
@@ -221,9 +217,10 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
         }
 
         if (points) {
-          points.rotation.y = Math.sin(elapsed * 0.32) * 0.2 + pointer.x;
-          points.rotation.x = Math.cos(elapsed * 0.28) * 0.12 - pointer.y;
-          points.rotation.z = -0.1 + Math.sin(elapsed * 0.22) * 0.08;
+          points.rotation.y = Math.sin(elapsed * 0.52) * 0.12 + pointer.x * 0.55;
+          points.rotation.x = Math.cos(elapsed * 0.42) * 0.08 - pointer.y * 0.55;
+          points.rotation.z = -0.08 + Math.sin(elapsed * 0.36) * 0.045;
+          points.scale.setScalar(0.84 + (1 - pulse) * 0.12);
         }
 
         renderer.render(scene, camera);
@@ -250,70 +247,129 @@ const fungusSrc = '/images/aboutme/gsdeveloper_3d_logo.png';
     }
   };
 
-  initContactFungusField();
-  document.addEventListener('astro:page-load', initContactFungusField);
+  initFungusMascots();
+  document.addEventListener('astro:page-load', initFungusMascots);
 </script>
 
 <style>
-  .contact-fungus-field {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    min-height: 100vh;
+  .fungus-mascot {
+    --mascot-size: clamp(112px, 14vw, 172px);
+
+    position: relative;
+    display: grid;
+    flex: 0 0 var(--mascot-size);
+    width: var(--mascot-size);
+    min-width: var(--mascot-size);
+    max-width: var(--mascot-size);
+    height: var(--mascot-size);
+    min-height: var(--mascot-size);
+    max-height: var(--mascot-size);
+    margin: 0;
+    place-items: center;
+    justify-self: end;
     overflow: hidden;
+    border-radius: 50%;
     background:
-      radial-gradient(circle at 74% 32%, rgba(56, 189, 248, 0.16), transparent 28%),
-      radial-gradient(circle at 16% 76%, rgba(125, 211, 252, 0.09), transparent 30%),
-      linear-gradient(90deg, rgba(125, 211, 252, 0.055) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(125, 211, 252, 0.04) 1px, transparent 1px), var(--paper-page-bg);
-    background-size:
-      auto,
-      auto,
-      68px 68px,
-      68px 68px,
-      auto;
-    pointer-events: none;
-    contain: layout paint;
+      radial-gradient(circle at 50% 52%, rgba(125, 211, 252, 0.18), transparent 44%),
+      radial-gradient(circle at 64% 28%, rgba(56, 189, 248, 0.14), transparent 26%);
+    contain: strict;
+    isolation: isolate;
+    transform: translateZ(0);
   }
 
-  .contact-fungus-field canvas {
+  .fungus-mascot::before,
+  .fungus-mascot::after {
+    position: absolute;
+    content: '';
+    pointer-events: none;
+  }
+
+  .fungus-mascot::before {
+    inset: 8%;
+    border: 1px solid color-mix(in srgb, var(--paper-accent) 28%, transparent);
+    border-radius: 50%;
+    opacity: 0.58;
+    animation: fungus-orbit 5.2s linear infinite;
+  }
+
+  .fungus-mascot::after {
+    right: 20%;
+    bottom: 11%;
+    width: 58%;
+    height: 11%;
+    border-radius: 999px;
+    background: rgba(2, 6, 23, 0.2);
+    filter: blur(9px);
+    opacity: 0.46;
+    animation: fungus-shadow 3.4s ease-in-out infinite;
+  }
+
+  .fungus-mascot canvas {
     position: absolute;
     inset: 0;
+    z-index: 2;
     display: block;
     width: 100%;
     height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    pointer-events: none;
   }
 
-  .contact-fungus-fallback {
+  .fungus-fallback {
     position: absolute;
-    top: 50%;
-    right: clamp(-46px, -3vw, -14px);
-    width: min(48vw, 520px);
-    max-width: none;
-    opacity: 0.16;
-    filter: drop-shadow(0 0 42px rgba(56, 189, 248, 0.28));
-    transform: translateY(-50%) rotate(-8deg);
+    z-index: 1;
+    width: 112%;
+    height: 112%;
+    object-fit: contain;
+    opacity: 1;
+    transform: scale(1.12);
+    transition: opacity 220ms ease;
   }
 
-  .contact-fungus-field[data-webgl-ready='true'] .contact-fungus-fallback {
+  .fungus-mascot[data-webgl-ready='true'] .fungus-fallback {
     opacity: 0;
   }
 
-  @media (max-width: 820px) {
-    .contact-fungus-fallback {
-      top: 24%;
-      right: -88px;
-      width: 360px;
+  @keyframes fungus-orbit {
+    0% {
+      transform: rotate(0deg) scale(0.94);
+    }
+
+    50% {
+      transform: rotate(180deg) scale(1.05);
+    }
+
+    100% {
+      transform: rotate(360deg) scale(0.94);
+    }
+  }
+
+  @keyframes fungus-shadow {
+    0%,
+    100% {
+      opacity: 0.46;
+      transform: scaleX(1);
+    }
+
+    50% {
+      opacity: 0.18;
+      transform: scaleX(0.62);
+    }
+  }
+
+  @media (max-width: 720px) {
+    .fungus-mascot {
+      --mascot-size: 104px;
+
+      justify-self: start;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .contact-fungus-fallback {
-      opacity: 0.18;
-    }
-
-    .contact-fungus-field[data-webgl-ready='true'] .contact-fungus-fallback {
-      opacity: 0.1;
+    .fungus-mascot::before,
+    .fungus-mascot::after {
+      animation: none;
     }
   }
 </style>

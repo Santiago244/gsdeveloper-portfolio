@@ -2,7 +2,7 @@
 title: 'Building gsdeveloper.dev with Astro'
 description: 'The first development note for this portfolio: why the site is code-first, static, and deployed through Cloudflare Pages.'
 date: '2026-06-28T00:00:00+02:00'
-draft: false
+draft: true
 showHeroImage: false
 tags:
   - Astro

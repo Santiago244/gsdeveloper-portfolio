@@ -1,5 +1,5 @@
 ---
-import { Download, FileText, Github, Linkedin, Mail, Send } from 'lucide-astro';
+import { Download, Github, Linkedin, Mail, Send } from 'lucide-astro';
 import ContactConstellation from '../components/contact/ContactConstellation.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
@@ -26,6 +26,7 @@ const contactLinks = [
 
 const cvPath = '/files/cesar-santiago-gonzalez-cv.pdf';
 const cvPagePath = '/cv';
+const logoPath = '/images/aboutme/gsdeveloper_3d_logo.png';
 ---
 
 <BaseLayout
@@ -62,7 +63,7 @@ const cvPagePath = '/cv';
 
     <section class="cv-panel" aria-labelledby="cv-title">
       <span class="cv-icon" aria-hidden="true">
-        <FileText size={28} stroke-width={1.8} />
+        <img src={logoPath} alt="" loading="lazy" decoding="async" />
       </span>
       <div>
         <p>Attached CV</p>
@@ -215,6 +216,15 @@ const cvPagePath = '/cv';
   .cv-icon {
     width: 58px;
     height: 58px;
+    overflow: hidden;
+  }
+
+  .cv-icon img {
+    display: block;
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+    border-radius: 0;
   }
 
   .cv-panel p {

@@ -1,0 +1,195 @@
+---
+import type { MediumArticle } from '../../utils/medium-feed';
+
+interface Props {
+  articles: MediumArticle[];
+}
+
+const { articles } = Astro.props;
+const formatDate = new Intl.DateTimeFormat('en', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+---
+
+{
+  articles.length > 0 && (
+    <section class="medium-section" aria-label="Medium articles">
+      <header class="medium-header">
+        <p>Medium Article</p>
+        <h2>Published on Medium</h2>
+      </header>
+
+      <div class="medium-grid">
+        {articles.map((article) => (
+          <a class="medium-card" href={article.url} target="_blank" rel="noreferrer">
+            {article.thumbnail && (
+              <span class="medium-thumb" aria-hidden="true">
+                <img src={article.thumbnail} alt="" loading="lazy" />
+              </span>
+            )}
+            <span class="medium-copy">
+              <span class="medium-meta">
+                <time datetime={article.date.toISOString()}>{formatDate.format(article.date)}</time>
+                <span>Medium Article</span>
+              </span>
+              <strong>{article.title}</strong>
+              {article.excerpt && <span class="medium-excerpt">{article.excerpt}</span>}
+              {article.categories.length > 0 && (
+                <span class="medium-tags" aria-label="Medium article tags">
+                  {article.categories.map((category) => (
+                    <small>{category}</small>
+                  ))}
+                </span>
+              )}
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .medium-section {
+    display: grid;
+    gap: 16px;
+    margin: 18px 0 38px;
+    padding: 22px 0 34px;
+    border-bottom: 1px solid var(--paper-line);
+  }
+
+  .medium-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .medium-header p {
+    margin: 0;
+    color: var(--paper-accent);
+    font-family: var(--font-meta);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .medium-header h2 {
+    margin: 0;
+    color: var(--paper-ink);
+    font-size: clamp(1.1rem, 1.8vw, 1.36rem);
+    line-height: 1.2;
+  }
+
+  .medium-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .medium-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--paper-line);
+    border-radius: 8px;
+    background: var(--paper-surface);
+    color: var(--paper-ink);
+    text-decoration: none;
+    box-shadow: var(--paper-shadow);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .medium-card:hover,
+  .medium-card:focus-visible {
+    border-color: var(--paper-line-strong);
+    box-shadow: var(--paper-shadow-lift);
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .medium-thumb {
+    display: block;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--paper-line);
+    background: var(--paper-surface-muted);
+  }
+
+  .medium-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.9) contrast(0.98);
+  }
+
+  .medium-copy {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+    padding: 15px;
+  }
+
+  .medium-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--paper-ink-faint);
+    font-family: var(--font-meta);
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .medium-meta span::before {
+    margin-right: 8px;
+    content: '\00b7';
+  }
+
+  .medium-card strong {
+    color: var(--paper-ink);
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .medium-excerpt {
+    color: var(--paper-ink-soft);
+    font-size: 0.86rem;
+    line-height: 1.6;
+  }
+
+  .medium-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .medium-tags small {
+    padding: 2px 7px;
+    border: 1px solid var(--paper-line);
+    border-radius: 999px;
+    color: var(--paper-ink-soft);
+    font-family: var(--font-meta);
+    font-size: 0.68rem;
+  }
+
+  @media (max-width: 920px) {
+    .medium-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .medium-header {
+      display: grid;
+      align-items: start;
+    }
+  }
+</style>
